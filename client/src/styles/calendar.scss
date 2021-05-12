@@ -1,41 +1,17 @@
 .calendar {
 	display: flex;
-	overflow-y: auto;
-	align-items: center;
 	flex: 1 1 100%;
 	flex-direction: column;
-	justify-content: center;
-
+	max-height: 100vh;
 	padding: 10px;
+}
 
-	background-color: rgb(189, 141, 141);
+.fc {
+	width: 100%;
+	max-height: 85vh;
+	min-height: 200px;
 
-	&__header {
-		margin: 0 0 10px 0;
-	}
-	&__body {
-		display: flex;
-		align-items: center;
-		flex-direction: column;
-		justify-content: center;
-
-		width: 100%;
-
-		& > * {
-			margin: 0 0 10px 0;
-		}
-	}
-	&__days {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		justify-content: flex-start;
-
-		width: 100%;
-
-		gap: 5px;
-	}
-	&__day {
-		flex: 0 0 50px;
+	&-daygrid-day-frame:hover {
+		border: 1px solid #597999;
 	}
 }

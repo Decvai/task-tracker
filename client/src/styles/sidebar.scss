@@ -2,4 +2,8 @@
 	flex-basis: 15%;
 	background-color: rgb(196, 195, 195);
 	height: 100%;
+
+	@media (max-width: 500px) {
+		display: none;
+	}
 }
