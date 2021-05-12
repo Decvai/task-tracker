@@ -1,6 +1,7 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
+import Clock from '../../utils/Clock';
 
 const Calendar = () => {
 	function handleDateClick(arg: DateClickArg) {
@@ -16,9 +17,8 @@ const Calendar = () => {
 			</div>
 			<div className='calendar__body'>
 				<div className='calendar__current-date'>
-					<div className='calendar__time'>12:32:20 AM</div>
-					<div className='calendar__current-day'>
-						Sunday, May 9, 2021
+					<div className='calendar__time'>
+						<Clock />
 					</div>
 				</div>
 

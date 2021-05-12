@@ -4,6 +4,7 @@
 	"private": true,
 	"author": "Vladyslav Katrych <vladyslav.katrych.main@gmail.com>",
 	"dependencies": {
+		"@fullcalendar/core": "^5.7.0",
 		"@fullcalendar/daygrid": "^5.6.0",
 		"@fullcalendar/interaction": "^5.6.0",
 		"@fullcalendar/react": "^5.6.0",
