@@ -4,25 +4,67 @@ body {
 	margin: 0;
 }
 
+// :root {
+// 	--cursorX: 50vw;
+// 	--cursorY: 50vh;
+// }
+// :root:before {
+// 	content: '';
+// 	display: block;
+// 	width: 100%;
+// 	height: 100%;
+// 	position: fixed;
+// 	pointer-events: none;
+// 	background: radial-gradient(
+// 		circle at var(--cursorX) var(--cursorY),
+// 		red 0%,
+// 		blue 100%
+// 	);
+// }
+
 @import './authorization.scss';
 @import './tracker.scss';
 @import './calendar.scss';
 
-:root {
-	--cursorX: 50vw;
-	--cursorY: 50vh;
+body {
+	background: #1c1c1c;
 }
-:root:before {
-	content: '';
-	display: block;
-	width: 100%;
-	height: 100%;
-	position: fixed;
-	pointer-events: none;
-	background: radial-gradient(
-		circle 10vmax at var(--cursorX) var(--cursorY),
-		rgba(0, 0, 0, 0) 0%,
-		rgba(0, 0, 0, 0.5) 80%,
-		rgba(0, 0, 0, 0.95) 100%
-	);
+
+.calendar {
+	&__wrapper {
+		position: relative;
+		max-width: 50rem;
+		margin: 2rem auto;
+		text-align: center;
+		overflow: hidden;
+
+		.fc-daygrid-day {
+			display: inline-block;
+			margin: 0.4rem 0.2rem;
+			border: 2px solid #f25f5c;
+		}
+
+		.fc-daygrid-day-number {
+			position: relative;
+			z-index: 1;
+			color: #eee;
+			padding: 1rem;
+		}
+	}
+
+	.shadow {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		height: 200vh;
+		width: 200vw;
+		transform: translateX(-50%) translateY(-50%);
+		background: radial-gradient(
+			circle at center,
+			transparent 0%,
+			transparent 5%,
+			#1c1c1c 10%,
+			#1c1c1c 100%
+		);
+	}
 }
