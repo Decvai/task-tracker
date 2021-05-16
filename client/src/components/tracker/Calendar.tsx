@@ -22,11 +22,14 @@ const Calendar = () => {
 					</div>
 				</div>
 
-				<FullCalendar
-					plugins={[dayGridPlugin, interactionPlugin]}
-					initialView='dayGridMonth'
-					dateClick={handleDateClick}
-				/>
+				<div className='calendar__wrapper'>
+					<FullCalendar
+						plugins={[dayGridPlugin, interactionPlugin]}
+						initialView='dayGridMonth'
+						dateClick={handleDateClick}
+					/>
+					<div className='shadow'></div>
+				</div>
 			</div>
 		</div>
 	);
