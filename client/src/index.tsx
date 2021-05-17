@@ -10,6 +10,13 @@ ReactDOM.render(
 	document.getElementById('root')
 );
 
+const shadowEl = document.createElement('div');
+shadowEl.classList.add('shadow');
+
+// const tbody = document.querySelector('.fc-daygrid-body')!;
+
+// tbody.append(shadowEl);
+
 const grid: HTMLElement = document.querySelector('.calendar__wrapper')!;
 
 const shadow: HTMLElement = grid.querySelector('.shadow')!;

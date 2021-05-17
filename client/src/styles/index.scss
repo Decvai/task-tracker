@@ -27,7 +27,8 @@ body {
 @import './calendar.scss';
 
 body {
-	background: #1c1c1c;
+	background: #858080;
+	color: #eee;
 }
 
 .calendar {
@@ -39,15 +40,11 @@ body {
 		overflow: hidden;
 
 		.fc-daygrid-day {
-			display: inline-block;
 			margin: 0.4rem 0.2rem;
 			border: 2px solid #f25f5c;
 		}
 
 		.fc-daygrid-day-number {
-			position: relative;
-			z-index: 1;
-			color: #eee;
 			padding: 1rem;
 		}
 	}
@@ -56,15 +53,86 @@ body {
 		position: absolute;
 		left: 50%;
 		top: 50%;
+		z-index: 10;
 		height: 200vh;
 		width: 200vw;
 		transform: translateX(-50%) translateY(-50%);
+		// background: radial-gradient(
+		// 	circle at center,
+		// 	transparent 0%,
+		// 	transparent 5%,
+		// 	#1c1c1c 10%,
+		// 	#1c1c1c 100%
+		// );
 		background: radial-gradient(
 			circle at center,
-			transparent 0%,
-			transparent 5%,
-			#1c1c1c 10%,
-			#1c1c1c 100%
+			rgba(75, 73, 73, 0.617) 5%,
+			#3d3d3d 10%,
+			#3d3d3d 100%
 		);
 	}
+}
+
+.fc .fc-header-toolbar {
+	z-index: 100;
+}
+
+.fc .fc-toolbar-title {
+	padding: 10px 0 0 10px;
+}
+
+.fc .fc-day-other .fc-daygrid-day-top {
+	opacity: 1;
+
+	.fc-daygrid-day-number {
+		color: rgb(107, 107, 107);
+	}
+}
+
+.fc .fc-daygrid-body {
+	z-index: unset;
+}
+
+.fc .fc-daygrid-day-frame {
+	z-index: 100;
+}
+
+.calendar__wrapper .fc-daygrid-day {
+	// border: 2px solid red;
+	border: 2px solid rgb(168, 168, 168);
+}
+
+.fc .fc-day-today {
+	border: 2px solid rgb(36, 79, 95);
+	&:hover {
+		outline: 2px solid rgb(36, 79, 95) !important;
+		background-color: rgb(158, 144, 101);
+	}
+}
+
+.fc .fc-button {
+	border: none;
+	background-color: inherit;
+	&:hover {
+		border: none !important;
+	}
+}
+
+.calendar__wrapper .fc-daygrid-day:hover {
+	border: 2px solid rgb(122, 122, 122);
+}
+
+.fc table {
+	border-collapse: unset;
+	border-spacing: 3px;
+}
+
+.fc-col-header {
+	position: relative;
+	z-index: 100;
+}
+
+.fc-col-header-cell,
+.fc-scrollgrid {
+	border: none !important;
 }
