@@ -11,17 +11,19 @@ const Calendar = () => {
 	return (
 		<div className='calendar'>
 			<div className='calendar__header'>
+				<div className='calendar__time'>
+					<Clock />
+				</div>
 				<div className='calendar__new-task'>
-					<button>Create new task</button>
+					<button>
+						<img
+							src='https://static.thenounproject.com/png/525766-200.png'
+							alt=''
+						/>
+					</button>
 				</div>
 			</div>
 			<div className='calendar__body'>
-				<div className='calendar__current-date'>
-					<div className='calendar__time'>
-						<Clock />
-					</div>
-				</div>
-
 				<div className='calendar__wrapper'>
 					<FullCalendar
 						plugins={[dayGridPlugin, interactionPlugin]}
