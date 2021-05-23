@@ -2,11 +2,14 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import Clock from '../../utils/Clock';
+import { useHistory } from 'react-router-dom';
 
 const Calendar = () => {
-	function handleDateClick(arg: DateClickArg) {
-		alert(arg.dateStr);
-	}
+	const history = useHistory();
+
+	const dateClickHandler = ({ dateStr }: DateClickArg) => {
+		history.push(`/day/${dateStr}`);
+	};
 
 	return (
 		<div className='calendar'>
@@ -28,7 +31,7 @@ const Calendar = () => {
 					<FullCalendar
 						plugins={[dayGridPlugin, interactionPlugin]}
 						initialView='dayGridMonth'
-						dateClick={handleDateClick}
+						dateClick={dateClickHandler}
 					/>
 					<div className='shadow'></div>
 				</div>
