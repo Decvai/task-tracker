@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react';
 import Tracker from './tracker/Tracker';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 
 function App() {
 	function clickHandler(event: MouseEvent<HTMLInputElement>) {
@@ -7,9 +8,11 @@ function App() {
 	}
 
 	return (
-		<div className='app' onClick={clickHandler}>
-			<Tracker />
-		</div>
+		<Router>
+			<div className='app' onClick={clickHandler}>
+				<Tracker />
+			</div>
+		</Router>
 	);
 }
 
