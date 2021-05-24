@@ -1,7 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,700;1,300&display=swap');
 
 * {
 	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 
 	&::-webkit-scrollbar-track {
 		border-radius: 10px;
@@ -36,12 +38,18 @@ body {
 @import './tracker.scss';
 @import './calendar.scss';
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 	:root {
 		font-size: 8px;
 	}
 
 	body {
 		background: #3d3d3d;
+	}
+}
+
+@media (min-width: 3500px) {
+	:root {
+		font-size: 30px;
 	}
 }
