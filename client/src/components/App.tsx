@@ -3,11 +3,9 @@ import Tracker from './tracker/Tracker';
 import {
 	BrowserRouter as Router,
 	Route,
-	Link,
 	Switch,
 	Redirect,
 } from 'react-router-dom';
-import Day from './tracker/Day';
 import Registration from './authorization/Registration';
 
 function App() {
