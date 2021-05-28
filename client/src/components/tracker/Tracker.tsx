@@ -1,7 +1,7 @@
 import Sidebar from './Sidebar';
 import Calendar from './Calendar';
 import { Route, Switch } from 'react-router';
-import Day from './Day';
+import { Day } from './Day';
 
 const Tracker = () => {
 	return (

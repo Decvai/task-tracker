@@ -31,12 +31,13 @@ body {
 	padding: 0;
 
 	color: #eee;
-	background: #575656;
+	background: linear-gradient(rgb(63, 71, 77), rgb(47, 45, 56));
 }
 
 @import './authorization.scss';
 @import './tracker.scss';
 @import './calendar.scss';
+@import './day.scss';
 
 @media (max-width: 500px) {
 	:root {
