@@ -1,6 +1,6 @@
 import Avatar from '../../assets/avatar.jpg';
 
-const Sidebar = () => {
+export const Sidebar = () => {
 	return (
 		<div className='sidebar'>
 			<div className='sidebar__profile'>
@@ -26,5 +26,3 @@ const Sidebar = () => {
 		</div>
 	);
 };
-
-export default Sidebar;

@@ -1,9 +1,9 @@
-import Sidebar from './Sidebar';
-import Calendar from './Calendar';
+import { Sidebar } from './Sidebar';
+import { Calendar } from './Calendar';
 import { Route, Switch } from 'react-router';
 import { Day } from './Day';
 
-const Tracker = () => {
+export const Tracker = () => {
 	return (
 		<div className='tracker'>
 			<Sidebar />
@@ -15,5 +15,3 @@ const Tracker = () => {
 		</div>
 	);
 };
-
-export default Tracker;

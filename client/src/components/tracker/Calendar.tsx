@@ -1,11 +1,11 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import Clock from '../../utils/Clock';
+import { Clock } from '../../utils/Clock';
 import { useHistory } from 'react-router-dom';
 import { MouseEvent, useRef } from 'react';
 
-const Calendar = () => {
+export const Calendar = () => {
 	const history = useHistory();
 
 	const calendarWrapperRef = useRef<HTMLDivElement>(null);
@@ -62,5 +62,3 @@ const Calendar = () => {
 		</div>
 	);
 };
-
-export default Calendar;

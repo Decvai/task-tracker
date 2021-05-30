@@ -1,45 +1,46 @@
 import { FC, FocusEvent, MouseEvent, useRef, useState } from 'react';
 
-interface StatusObject {
+interface IStatus {
 	id: string;
 	color: string;
 	text: string;
 }
 
-interface StatusObjectMap {
-	[P: string]: StatusObject;
+interface StatusList {
+	[P: string]: IStatus;
+}
+
+export interface Task {
+	id: string;
+	name: string;
+	status: IStatus;
+	time: {
+		from: string;
+		to: string;
+	};
+	notes: string;
 }
 
 interface StatusProps {
-	task: {
-		id: string;
-		status: StatusObject;
-		timePeriod: {
-			from: string;
-			to: string;
-		};
-		expectedHours: number;
-		actualHours: number;
-		comment: string;
-	};
-	statusList: StatusObjectMap;
+	task: Task;
+	statusList: StatusList;
 }
 
 export const Status: FC<StatusProps> = ({ task, statusList }) => {
 	const [currentStatus, setCurrentStatus] = useState(task.status);
 	const statusElement = useRef<HTMLTableDataCellElement>(null);
 
-	function showStatusList(event: MouseEvent<HTMLDivElement>) {
+	const showStatusList = (event: MouseEvent<HTMLDivElement>) => {
 		const currentStatusEl = event.currentTarget;
 		currentStatusEl.classList.add('show');
-	}
+	};
 
-	function statusListBlurHandler(event: FocusEvent<HTMLDivElement>) {
+	const statusListBlurHandler = (event: FocusEvent<HTMLDivElement>) => {
 		const currentStatusEl = event.currentTarget;
 		currentStatusEl.classList.remove('show');
-	}
+	};
 
-	function changeStatus(event: MouseEvent<HTMLDivElement>) {
+	const changeStatus = (event: MouseEvent<HTMLDivElement>) => {
 		event.stopPropagation();
 		const newStatusEl = event.currentTarget;
 		const newStatusId = newStatusEl.dataset.statusId;
@@ -52,7 +53,7 @@ export const Status: FC<StatusProps> = ({ task, statusList }) => {
 
 			statusElement.current?.blur();
 		}
-	}
+	};
 
 	return (
 		<td
