@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Registration = () => {
+export const Registration = () => {
 	return (
 		<div>
 			<p>Registration</p>
@@ -8,5 +8,3 @@ const Registration = () => {
 		</div>
 	);
 };
-
-export default Registration;

@@ -1,17 +1,17 @@
 import { MouseEvent } from 'react';
-import Tracker from './tracker/Tracker';
+import { Tracker } from './tracker/Tracker';
 import {
 	BrowserRouter as Router,
 	Route,
 	Switch,
 	Redirect,
 } from 'react-router-dom';
-import Registration from './authorization/Registration';
+import { Registration } from './authorization/Registration';
 
-function App() {
-	function clickHandler(event: MouseEvent<HTMLInputElement>) {
+export const App = () => {
+	const clickHandler = (event: MouseEvent<HTMLInputElement>) => {
 		console.log(event.target);
-	}
+	};
 
 	return (
 		<Router>
@@ -25,6 +25,4 @@ function App() {
 			</div>
 		</Router>
 	);
-}
-
-export default App;
+};
