@@ -2,6 +2,7 @@ import { Link, useParams } from 'react-router-dom';
 import { Status, Task } from './Status';
 import GoBack from '../../assets/go-back.png';
 import { useEffect, useState } from 'react';
+import { Loader } from '../../utils/Loader/Loader';
 
 interface ParamTypes {
 	id: string;
@@ -25,7 +26,7 @@ const statusList = {
 	},
 };
 
-const getTasks = (): Promise<Task[]> => {
+const fakeFetch = (): Promise<Task[]> => {
 	const tasks = [
 		{
 			id: '01',
@@ -34,6 +35,10 @@ const getTasks = (): Promise<Task[]> => {
 			time: {
 				from: '4:30 AM',
 				to: '6:30 AM',
+			},
+			timeline: {
+				from: '31.05.2021',
+				to: '03.06.2021',
 			},
 			notes: '',
 		},
@@ -45,6 +50,10 @@ const getTasks = (): Promise<Task[]> => {
 				from: '4:30 AM',
 				to: '6:30 PM',
 			},
+			timeline: {
+				from: '31.05.2021',
+				to: '03.06.2021',
+			},
 			notes: 'Some notes',
 		},
 		{
@@ -54,6 +63,10 @@ const getTasks = (): Promise<Task[]> => {
 			time: {
 				from: '4:30 AM',
 				to: '6:30 AM',
+			},
+			timeline: {
+				from: '31.05.2021',
+				to: '03.06.2021',
 			},
 			notes: '',
 		},
@@ -66,18 +79,39 @@ const getTasks = (): Promise<Task[]> => {
 
 export const Day = () => {
 	const [tasks, setTasks] = useState<Task[]>([]);
-	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length + 1 : 6;
+	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length : 6;
 	let indexNumber = 0;
 
 	const { id } = useParams<ParamTypes>();
 
 	useEffect(() => {
-		getTasks().then((tasks: Task[]) => {
-			if (tasks.length) {
-				setTasks(tasks);
-			}
-		});
+		const getTasks = async () => {
+			const tasksFromServer = await fetchTasks();
+
+			setTasks(tasksFromServer);
+		};
+
+		getTasks();
 	}, []);
+
+	const fetchTasks = async () => {
+		const res = await fakeFetch();
+
+		// const tasksFromServer = await res.json();
+		//return tasksFromServer;
+
+		return res;
+	};
+
+	const deleteTask = async (id: string) => {
+		// await fetch(url/${id}, {method: 'DELETE'})
+
+		//check response code
+
+		//if okay, then -
+
+		setTasks(tasks.filter(task => task.id !== id));
+	};
 
 	return (
 		<div className='day'>
@@ -97,7 +131,6 @@ export const Day = () => {
 					<table>
 						<tbody>
 							<tr>
-								<th></th>
 								<th>№</th>
 								<th>Task name</th>
 								<th>Status</th>
@@ -107,8 +140,17 @@ export const Day = () => {
 
 							{tasks.map(task => (
 								<tr key={task.id}>
-									<td>X</td>
-									<td>{++indexNumber}</td>
+									<td className='day__index-column'>
+										<div
+											className='day__remove-task'
+											onClick={() => deleteTask(task.id)}
+										>
+											<span>X</span>
+										</div>
+										<div className='day__index'>
+											{++indexNumber}
+										</div>
+									</td>
 									<td>{task.name}</td>
 									<Status
 										task={task}
@@ -124,14 +166,19 @@ export const Day = () => {
 								</tr>
 							))}
 
-							<tr className='day__add-task'>
-								{/* <td>X</td> */}
-								<td colSpan={columnsNumber}>+ Add</td>
+							<tr>
+								<td
+									className='day__add-task'
+									colSpan={columnsNumber}
+								>
+									<div className='day__remove-task fake'></div>
+									<div>+ Add</div>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				) : (
-					<div>Loading...</div>
+					<Loader />
 				)}
 			</div>
 		</div>
