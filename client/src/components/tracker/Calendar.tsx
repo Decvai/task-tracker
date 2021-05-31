@@ -3,10 +3,12 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { Clock } from '../../utils/Clock';
 import { useHistory } from 'react-router-dom';
-import { MouseEvent, useRef } from 'react';
+import { MouseEvent, useRef, useState } from 'react';
+import { NewTask } from './NewTask';
 
 export const Calendar = () => {
 	const history = useHistory();
+	const [newTaskActive, setNewTaskActive] = useState(false);
 
 	const calendarWrapperRef = useRef<HTMLDivElement>(null);
 	const shadowRef = useRef<HTMLDivElement>(null);
@@ -37,7 +39,7 @@ export const Calendar = () => {
 					<Clock />
 				</div>
 				<div className='calendar__new-task'>
-					<button>
+					<button onClick={() => setNewTaskActive(true)}>
 						<img
 							src='https://static.thenounproject.com/png/525766-200.png'
 							alt=''
@@ -59,6 +61,8 @@ export const Calendar = () => {
 					<div className='shadow' ref={shadowRef}></div>
 				</div>
 			</div>
+
+			<NewTask active={newTaskActive} setActive={setNewTaskActive} />
 		</div>
 	);
 };
