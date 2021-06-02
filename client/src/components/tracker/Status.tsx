@@ -1,30 +1,5 @@
 import { FC, FocusEvent, MouseEvent, useRef, useState } from 'react';
-
-interface IStatus {
-	id: string;
-	color: string;
-	text: string;
-}
-
-interface StatusList {
-	[P: string]: IStatus;
-}
-
-export interface Task {
-	id: string;
-	name: string;
-	status: IStatus;
-	time: {
-		from: string;
-		to: string;
-	};
-	notes: string;
-}
-
-interface StatusProps {
-	task: Task;
-	statusList: StatusList;
-}
+import { StatusProps } from '../../api/tasks';
 
 export const Status: FC<StatusProps> = ({ task, statusList }) => {
 	const [currentStatus, setCurrentStatus] = useState(task.status);
