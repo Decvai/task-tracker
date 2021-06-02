@@ -22,14 +22,14 @@ export const Calendar = () => {
 
 		const rect = calendarWrapper.getBoundingClientRect();
 
-		window.requestAnimationFrame(() => {
-			const shadow = shadowRef.current;
+		// window.requestAnimationFrame(() => {
+		const shadow = shadowRef.current;
 
-			if (!shadow) throw new Error('Shadow element is missing');
+		if (!shadow) throw new Error('Shadow element is missing');
 
-			shadow.style.left = `${e.clientX - rect.left}px`;
-			shadow.style.top = `${e.clientY - rect.top}px`;
-		});
+		shadow.style.left = `${e.clientX - rect.left}px`;
+		shadow.style.top = `${e.clientY - rect.top}px`;
+		// });
 	};
 
 	return (

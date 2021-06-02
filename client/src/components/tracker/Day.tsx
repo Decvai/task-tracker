@@ -1,81 +1,14 @@
 import { Link, useParams } from 'react-router-dom';
-import { Status, Task } from './Status';
+import { Status } from './Status';
 import GoBack from '../../assets/go-back.png';
 import { useEffect, useState } from 'react';
 import { Loader } from '../../utils/Loader/Loader';
+import { fakeFetch } from '../../api/tasks';
+import { Task, statusList } from '../../api/tasks';
 
 interface ParamTypes {
-	id: string;
+	readonly id: string;
 }
-
-const statusList = {
-	working: {
-		id: '01',
-		color: 'rgb(233, 187, 62)',
-		text: 'Working on it',
-	},
-	stuck: {
-		id: '02',
-		color: 'rgb(143, 52, 52)',
-		text: 'Stuck',
-	},
-	done: {
-		id: '03',
-		color: 'rgb(62, 165, 93)',
-		text: 'Done',
-	},
-};
-
-const fakeFetch = (): Promise<Task[]> => {
-	const tasks = [
-		{
-			id: '01',
-			name: 'Important task',
-			status: statusList.stuck,
-			time: {
-				from: '4:30 AM',
-				to: '6:30 AM',
-			},
-			timeline: {
-				from: '31.05.2021',
-				to: '03.06.2021',
-			},
-			notes: '',
-		},
-		{
-			id: '02',
-			name: 'efwfewff task',
-			status: statusList.working,
-			time: {
-				from: '4:30 AM',
-				to: '6:30 PM',
-			},
-			timeline: {
-				from: '31.05.2021',
-				to: '03.06.2021',
-			},
-			notes: 'Some notes',
-		},
-		{
-			id: '03',
-			name: 'Yes',
-			status: statusList.stuck,
-			time: {
-				from: '4:30 AM',
-				to: '6:30 AM',
-			},
-			timeline: {
-				from: '31.05.2021',
-				to: '03.06.2021',
-			},
-			notes: '',
-		},
-	];
-
-	return new Promise(r => {
-		setTimeout(() => r(tasks), 1500);
-	});
-};
 
 export const Day = () => {
 	const [tasks, setTasks] = useState<Task[]>([]);
@@ -85,13 +18,20 @@ export const Day = () => {
 	const { id } = useParams<ParamTypes>();
 
 	useEffect(() => {
-		const getTasks = async () => {
+		let isMounted = true;
+
+		const getTasks: any = async () => {
 			const tasksFromServer = await fetchTasks();
 
-			setTasks(tasksFromServer);
+			if (isMounted) {
+				setTasks(tasksFromServer);
+			}
 		};
-
 		getTasks();
+
+		return () => {
+			isMounted = false;
+		};
 	}, []);
 
 	const fetchTasks = async () => {
@@ -156,7 +96,7 @@ export const Day = () => {
 										task={task}
 										statusList={statusList}
 									/>
-									<td>{`${task.time.from} - ${task.time.to}`}</td>
+									<td>{`${task.hours.from} - ${task.hours.to}`}</td>
 									<td>
 										<textarea
 											className='day__note'

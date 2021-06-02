@@ -23,7 +23,7 @@
 		transition: all var(--transitionDelay);
 		transform: scale(0.5);
 
-		border-radius: 12px;
+		border-radius: 3px;
 		background-color: #fff;
 
 		display: flex;
@@ -33,13 +33,13 @@
 			color: rgba(39, 39, 39, 0.829);
 		}
 
-		> *:not(:last-child) {
+		> * {
 			margin: 0px 0px 10px 0px;
 
 			display: flex;
 			justify-content: space-between;
 
-			& *:first-child {
+			& *:not(:last-child) {
 				margin: 0px 10px 0px 0px;
 			}
 		}
@@ -54,9 +54,47 @@
 		opacity: 1;
 	}
 
+	&__name,
+	&__notes {
+		padding: 5px;
+	}
+
+	&__notes {
+		resize: none;
+	}
+
+	&__separator {
+		color: rgba(39, 39, 39, 0.829);
+	}
+
 	&__confirm {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		input {
+			font-size: 1rem;
+			color: rgba(39, 39, 39, 0.829);
+			padding: 5px 10px;
+
+			background-color: transparent;
+			border-radius: 10%;
+
+			border: none;
+			border-bottom: 1px solid #000;
+
+			cursor: pointer;
+
+			box-shadow: 1px 1px 3px #000;
+
+			&:active {
+				background-color: rgb(221, 221, 221);
+				transform: translateY(10%);
+			}
+		}
+	}
+
+	&__error {
+		color: red;
 	}
 }
