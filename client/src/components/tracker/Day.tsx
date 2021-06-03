@@ -11,6 +11,7 @@ interface ParamTypes {
 }
 
 export const Day = () => {
+	const [isAdding, setIsAdding] = useState<boolean>(false);
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length : 6;
 	let indexNumber = 0;
@@ -112,7 +113,34 @@ export const Day = () => {
 									colSpan={columnsNumber}
 								>
 									<div className='day__remove-task fake'></div>
-									<div>+ Add</div>
+									<form>
+										<input
+											className='day__add-task-name'
+											type='text'
+											placeholder='+ Add'
+										/>
+										<input
+											className='day__add-task-hours'
+											type='time'
+										/>
+									</form>
+									{/* {isAdding ? (
+										<form>
+											<input
+												type='text'
+												placeholder='+ Add'
+											/>
+											<input type='time' />
+										</form>
+									) : (
+										<div
+											onClick={() =>
+												setIsAdding(!isAdding)
+											}
+										>
+											+ Add
+										</div>
+									)} */}
 								</td>
 							</tr>
 						</tbody>
