@@ -1,206 +1,234 @@
-import { useFormik } from 'formik';
+import {
+	ErrorMessage,
+	Field,
+	Form,
+	Formik,
+	FormikHelpers,
+	useFormik,
+} from 'formik';
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import { fakePostFetch, statusList, Task, TimeInterval } from '../../api/tasks';
+import { newTaskValidate, ValidateValues } from '../../utils/validators';
 
 interface NewTaskProps {
 	active: boolean;
 	setActive: Dispatch<SetStateAction<boolean>>;
 }
 
-interface ValidateValues {
-	name: string;
-	hoursFrom: string;
-	hoursTo: string;
-	dateIntervalFrom: string;
-	dateIntervalTo: string;
-	notes: string;
-}
-
-type ValidateErrors = {
-	[K in keyof ValidateValues]: string;
-};
-
-const today = new Date().toISOString().slice(0, 10);
-const currentHours = `${new Date().getHours()}:${new Date().getMinutes()}`;
-const initialValues: ValidateValues = {
-	name: '',
-	hoursFrom: '',
-	hoursTo: '',
-	dateIntervalFrom: today,
-	dateIntervalTo: today,
-	notes: '',
-};
-
-const validate = ({
-	name,
-	hoursFrom,
-	hoursTo,
-	dateIntervalFrom,
-	dateIntervalTo,
-}: ValidateValues) => {
-	const errors = {} as ValidateErrors;
-
-	if (!name) {
-		errors.name = 'Required';
-	} else if (name.length > 50) {
-		errors.name = 'Must be 50 characters or less';
-	}
-
-	if ((!hoursFrom && hoursTo) || (hoursFrom && !hoursTo)) {
-		errors.hoursFrom = 'You must include both time dates or delete them';
-	} else if (hoursFrom > hoursTo) {
-		errors.hoursFrom =
-			"The expected time 'from' must be less than the time 'to'";
-	} else if (
-		hoursFrom &&
-		hoursFrom < currentHours &&
-		dateIntervalFrom === today
-	) {
-		errors.hoursFrom = 'The time must be greater than the current one';
-	}
-
-	if (!dateIntervalFrom || !dateIntervalTo) {
-		errors.dateIntervalFrom = 'Both dates are required';
-	} else if (dateIntervalFrom > dateIntervalTo) {
-		errors.dateIntervalFrom =
-			"The date 'from' must be less than the date 'to'";
-	} else if (dateIntervalFrom < today) {
-		errors.dateIntervalFrom = "The date 'from must be greater than today";
-	}
-
-	return errors;
-};
-
 export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
-	const formik = useFormik({
-		initialValues,
-		validate,
-		onSubmit: async ({
+	const today = new Date().toISOString().slice(0, 10);
+
+	const initialValues: ValidateValues = {
+		name: '',
+		hoursFrom: '',
+		hoursTo: '',
+		dateIntervalFrom: today,
+		dateIntervalTo: today,
+		notes: '',
+	};
+
+	const onSubmit = async (
+		{
 			name,
 			hoursFrom,
 			hoursTo,
 			dateIntervalFrom,
 			dateIntervalTo,
 			notes,
-		}: ValidateValues) => {
-			const id = new Date().getTime().toLocaleString();
-			const newTask: Task = {
-				id,
-				name,
-				hours: {
-					from: hoursFrom,
-					to: hoursTo,
-				},
-				dateInterval: {
-					from: dateIntervalFrom,
-					to: dateIntervalTo,
-				},
-				notes,
-				status: statusList.blank,
-			};
+		}: ValidateValues,
+		{ resetForm }: FormikHelpers<ValidateValues>
+	) => {
+		const id = new Date().getTime().toLocaleString();
+		const newTask: Task = {
+			id,
+			name,
+			hours: {
+				from: hoursFrom,
+				to: hoursTo,
+			},
+			dateInterval: {
+				from: dateIntervalFrom,
+				to: dateIntervalTo,
+			},
+			notes,
+			status: statusList.blank,
+		};
 
-			console.log(newTask);
+		console.log(newTask);
 
-			//TODO: send to server
+		//TODO send to server
 
-			const response: Task = await fakePostFetch(newTask);
-			if (!response) {
-				alert('Response is not ok'); //TODO create a submit button effect
-				return;
-			}
+		const response: Task = await fakePostFetch(newTask);
+		if (!response) {
+			alert('Response is not ok'); //TODO create a submit button effect
+			return;
+		}
 
-			setActive(false);
-		},
-	});
+		resetForm();
+		setActive(false);
+	};
 
 	return (
 		<div
 			className={active ? 'new-task active' : 'new-task'}
 			onClick={() => setActive(false)}
 		>
-			<form
-				className={
-					active ? 'new-task__content active' : 'new-task__content'
-				}
-				onSubmit={formik.handleSubmit}
-				onClick={e => e.stopPropagation()}
+			<Formik
+				initialValues={initialValues}
+				onSubmit={onSubmit}
+				validate={newTaskValidate}
 			>
-				<div>
-					<label htmlFor='name'>Name: </label>
-					<input
-						id='name'
-						className='new-task__name'
-						type='text'
-						{...formik.getFieldProps('name')}
-					/>
-				</div>
-				{formik.touched.name && formik.errors.name ? (
-					<div>{formik.errors.name}</div>
-				) : null}
+				{({ isSubmitting, values, errors, touched }) => (
+					<Form
+						className={
+							active
+								? 'new-task__content active'
+								: 'new-task__content'
+						}
+						onClick={e => e.stopPropagation()}
+					>
+						<div className='new-task__input-wrapper'>
+							<label htmlFor='name'>Name: </label>
+							<Field
+								id='name'
+								className={
+									errors.name && touched.name
+										? 'new-task__name error'
+										: 'new-task__name'
+								}
+								name='name'
+								type='text'
+							/>
+							<ErrorMessage
+								className='new-task__error'
+								component='div'
+								name='name'
+							/>
+						</div>
 
-				<div>
-					<label htmlFor='hoursFrom'>Expected time: </label>
-					<div>
-						<input
-							id='hoursFrom'
-							type='time'
-							{...formik.getFieldProps('hoursFrom')}
-						/>
+						<div className='new-task__input-wrapper'>
+							<label
+								htmlFor={
+									values.hoursFrom ? 'hoursTo' : 'hoursFrom'
+								}
+							>
+								Expected time:{' '}
+							</label>
+							<div>
+								<Field
+									id='hoursFrom'
+									className={
+										errors.hoursFrom &&
+										(touched.hoursFrom || touched.hoursTo)
+											? 'new-task__time error'
+											: 'new-task__time'
+									}
+									name='hoursFrom'
+									type='time'
+								/>
+								<span className='new-task__separator'>—</span>
+								<Field
+									id='hoursTo'
+									className={
+										errors.hoursTo &&
+										(touched.hoursFrom || touched.hoursTo)
+											? 'new-task__time error'
+											: 'new-task__time'
+									}
+									name='hoursTo'
+									type='time'
+								/>
+								<ErrorMessage
+									className='new-task__error'
+									component='div'
+									name='hoursFrom'
+								/>
+								{!errors.hoursFrom && (
+									<ErrorMessage
+										className='new-task__error'
+										component='div'
+										name='hoursTo'
+									/>
+								)}
+							</div>
+						</div>
 
-						<span className='new-task__separator'>—</span>
-						<input
-							id='hoursTo'
-							type='time'
-							{...formik.getFieldProps('hoursTo')}
-						/>
-					</div>
-					{(formik.touched.hoursFrom || formik.touched.hoursTo) &&
-					formik.errors.hoursFrom ? (
-						<div>{formik.errors.hoursFrom}</div>
-					) : null}
-				</div>
+						<div className='new-task__input-wrapper'>
+							<label
+								htmlFor={
+									values.hoursFrom
+										? 'dateIntervalTo'
+										: 'dateIntervalFrom'
+								}
+							>
+								Date interval:{' '}
+							</label>
+							<div>
+								<Field
+									id='dateIntervalFrom'
+									className={
+										errors.dateIntervalFrom &&
+										touched.dateIntervalFrom
+											? 'new-task__time error'
+											: 'new-task__time'
+									}
+									name='dateIntervalFrom'
+									type='date'
+									min={today}
+								/>
+								<span className='new-task__separator'>—</span>
+								<Field
+									id='dateIntervalTo'
+									className={
+										errors.dateIntervalTo &&
+										touched.dateIntervalTo
+											? 'new-task__time error'
+											: 'new-task__time'
+									}
+									name='dateIntervalTo'
+									type='date'
+									min={today}
+								/>
+								<ErrorMessage
+									className='new-task__error'
+									component='div'
+									name={
+										errors.dateIntervalTo
+											? 'dateIntervalTo'
+											: 'dateIntervalFrom'
+									}
+								/>
+							</div>
+						</div>
 
-				<div>
-					<label htmlFor='dateIntervalFrom'>Date interval: </label>
-					<div>
-						<input
-							id='dateIntervalFrom'
-							type='date'
-							{...formik.getFieldProps('dateIntervalFrom')}
-						/>
-						<span className='new-task__separator'>—</span>
-						<input
-							id='dateIntervalTo'
-							type='date'
-							{...formik.getFieldProps('dateIntervalTo')}
-						/>
-					</div>
-					{(formik.touched.dateIntervalFrom ||
-						formik.touched.dateIntervalTo) &&
-					formik.errors.dateIntervalFrom ? (
-						<div>{formik.errors.dateIntervalFrom}</div>
-					) : null}
-				</div>
+						<div className='new-task__input-wrapper'>
+							<label htmlFor='notes'>Notes:</label>
+							<Field
+								id='notes'
+								className='new-task__notes'
+								name='notes'
+								as='textarea'
+								rows={10}
+								cols={70}
+								maxLength={3000}
+							></Field>
+						</div>
 
-				<div>
-					<label htmlFor='notes'>Notes:</label>
-					<textarea
-						id='notes'
-						className='new-task__notes'
-						rows={10}
-						cols={70}
-						maxLength={3000}
-						{...formik.getFieldProps('notes')}
-					></textarea>
-				</div>
-
-				<hr />
-
-				<div className='new-task__confirm'>
-					<input type='submit' value='Create' />
-					{/* <button type='submit'>Create</button> */}
-				</div>
-			</form>
+						<div className='new-task__confirm'>
+							<div className='fa fa-check done'></div>
+							<div className='fa fa-close failed'></div>
+							<input
+								className={
+									isSubmitting ? 'submit loading' : 'submit'
+								}
+								type='submit'
+								value='Submit'
+								disabled={isSubmitting}
+							/>
+						</div>
+					</Form>
+				)}
+			</Formik>
 		</div>
 	);
 };
