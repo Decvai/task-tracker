@@ -215,8 +215,6 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 						</div>
 
 						<div className='new-task__confirm'>
-							<div className='fa fa-check done'></div>
-							<div className='fa fa-close failed'></div>
 							<input
 								className={
 									isSubmitting ? 'submit loading' : 'submit'
