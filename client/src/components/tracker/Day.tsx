@@ -1,10 +1,12 @@
 import { Link, useParams } from 'react-router-dom';
 import { Status } from './Status';
 import GoBack from '../../assets/go-back.png';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { Loader } from '../../utils/Loader/Loader';
-import { fakeFetch } from '../../api/tasks';
+import { fakeFetch, fakePostFetch, TimeInterval } from '../../api/tasks';
 import { Task, statusList } from '../../api/tasks';
+import { getCurrentHours, getToday } from '../../utils/helpers';
+import ErrorIcon from '../../assets/error.png';
 
 interface ParamTypes {
 	readonly id: string;
@@ -12,6 +14,12 @@ interface ParamTypes {
 
 export const Day = () => {
 	const [isAdding, setIsAdding] = useState<boolean>(false);
+	const [taskName, setTaskName] = useState<string>('');
+	const [hours, setHours] = useState<TimeInterval>({
+		from: '',
+		to: '',
+	});
+	const [hoursError, setHoursError] = useState<string>('');
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length : 6;
 	let indexNumber = 0;
@@ -21,11 +29,15 @@ export const Day = () => {
 	useEffect(() => {
 		let isMounted = true;
 
-		const getTasks: any = async () => {
-			const tasksFromServer = await fetchTasks();
+		const getTasks = async () => {
+			try {
+				const tasksFromServer = await fetchTasks();
 
-			if (isMounted) {
-				setTasks(tasksFromServer);
+				if (isMounted) {
+					setTasks([...tasksFromServer]);
+				}
+			} catch (err) {
+				alert(JSON.stringify(err));
 			}
 		};
 		getTasks();
@@ -47,11 +59,60 @@ export const Day = () => {
 	const deleteTask = async (id: string) => {
 		// await fetch(url/${id}, {method: 'DELETE'})
 
-		//check response code
+		// Todo check response code
 
 		//if okay, then -
 
 		setTasks(tasks.filter(task => task.id !== id));
+	};
+
+	const changeNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
+		const name = event.target.value;
+
+		setTaskName(name);
+
+		if (name) {
+			setIsAdding(true);
+			return;
+		}
+
+		setIsAdding(false);
+	};
+
+	const addNewTask = async () => {
+		// Todo send fetch to the server..
+		if (hours.from > hours.to || hours.from < getCurrentHours()) {
+			setHoursError('Hours is not correct');
+			return;
+		}
+
+		const id = new Date().getTime().toLocaleString();
+		const today = getToday();
+
+		const newTask: Task = {
+			id,
+			name: taskName,
+			status: statusList.blank,
+			hours: {
+				from: hours.from,
+				to: hours.to,
+			},
+			dateInterval: {
+				from: today,
+				to: today,
+			},
+			notes: '',
+		};
+		setTasks([...tasks, newTask]);
+		setTaskName('');
+		setIsAdding(false);
+
+		try {
+			await fakePostFetch(newTask);
+		} catch (err) {
+			alert(JSON.stringify(err));
+			deleteTask(id);
+		}
 	};
 
 	return (
@@ -116,31 +177,97 @@ export const Day = () => {
 									<form>
 										<input
 											className='day__add-task-name'
+											value={taskName}
 											type='text'
 											placeholder='+ Add'
+											onChange={changeNameHandler}
 										/>
+										<div className='day__add-task-hours'>
+											<input
+												className={
+													isAdding
+														? 'day__add-task-hours-from show'
+														: 'day__add-task-hours-from'
+												}
+												onChange={e => {
+													const hoursFrom =
+														e.target.value;
+													setHours({
+														...hours,
+														from: hoursFrom,
+													});
+												}}
+												disabled={!isAdding}
+												type='time'
+											/>
+											<span
+												className={
+													isAdding
+														? 'day__add-task-separator show'
+														: 'day__add-task-separator'
+												}
+											>
+												—
+											</span>
+											<input
+												className={
+													isAdding
+														? 'day__add-task-hours-to show'
+														: 'day__add-task-hours-to'
+												}
+												onChange={e => {
+													const hoursTo =
+														e.target.value;
+													setHours({
+														...hours,
+														to: hoursTo,
+													});
+												}}
+												disabled={!isAdding}
+												type='time'
+											/>
+											{isAdding && hoursError && (
+												<div className='day__add-task-error'>
+													<img
+														src={ErrorIcon}
+														alt='ErrorIcon'
+													/>
+													<span>
+														{/* Lorem ipsum dolor sit
+														amet consectetur
+														adipisicing elit. Soluta
+														provident aspernatur,
+														sunt cupiditate,
+														aliquam, reiciendis
+														natus sed voluptate
+														totam laboriosam quidem
+														accusamus animi debitis
+														asperiores laborum
+														mollitia modi id
+														corporis ipsa odit ullam
+														quae. Et omnis iusto
+														incidunt architecto quia
+														odit ullam harum
+														distinctio nam, id
+														explicabo dolor ad
+														asperiores! */}
+														{hoursError}
+													</span>
+												</div>
+											)}
+										</div>
 										<input
-											className='day__add-task-hours'
-											type='time'
+											className={
+												isAdding
+													? 'day__add-task-confirm show'
+													: 'day__add-task-confirm'
+											}
+											type='button'
+											value='Add'
+											onClick={addNewTask}
+											disabled={!isAdding}
 										/>
 									</form>
-									{/* {isAdding ? (
-										<form>
-											<input
-												type='text'
-												placeholder='+ Add'
-											/>
-											<input type='time' />
-										</form>
-									) : (
-										<div
-											onClick={() =>
-												setIsAdding(!isAdding)
-											}
-										>
-											+ Add
-										</div>
-									)} */}
 								</td>
 							</tr>
 						</tbody>

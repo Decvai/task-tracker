@@ -1,13 +1,7 @@
-import {
-	ErrorMessage,
-	Field,
-	Form,
-	Formik,
-	FormikHelpers,
-	useFormik,
-} from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
 import { fakePostFetch, statusList, Task, TimeInterval } from '../../api/tasks';
+import { getToday } from '../../utils/helpers';
 import { newTaskValidate, ValidateValues } from '../../utils/validators';
 
 interface NewTaskProps {
@@ -16,7 +10,7 @@ interface NewTaskProps {
 }
 
 export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
-	const today = new Date().toISOString().slice(0, 10);
+	const today = getToday();
 
 	const initialValues: ValidateValues = {
 		name: '',
@@ -58,10 +52,10 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 
 		//TODO send to server
 
-		const response: Task = await fakePostFetch(newTask);
-		if (!response) {
-			alert('Response is not ok'); //TODO create a submit button effect
-			return;
+		try {
+			await fakePostFetch(newTask);
+		} catch (err) {
+			alert(JSON.stringify(err));
 		}
 
 		resetForm();

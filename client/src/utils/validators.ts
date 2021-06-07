@@ -1,3 +1,5 @@
+import { getCurrentHours, getToday } from './helpers';
+
 export interface ValidateValues {
 	name: string;
 	hoursFrom: string;
@@ -18,8 +20,8 @@ export const newTaskValidate = ({
 	dateIntervalFrom,
 	dateIntervalTo,
 }: ValidateValues) => {
-	const today = new Date().toISOString().slice(0, 10);
-	const currentHours = `${new Date().getHours()}:${new Date().getMinutes()}`;
+	const today = getToday();
+	const currentHours = getCurrentHours();
 
 	const errors = {} as ValidateErrors;
 

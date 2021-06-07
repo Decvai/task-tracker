@@ -96,13 +96,13 @@ const tasks: Task[] = [
 ];
 
 export const fakeFetch = (): Promise<Task[]> => {
-	return new Promise(r => {
+	return new Promise<Task[]>((r, j) => {
 		setTimeout(() => r(tasks), 1500);
 	});
 };
 
 export const fakePostFetch = (task: Task): Promise<Task> => {
-	return new Promise(r => {
+	return new Promise((r, j) => {
 		setTimeout(() => {
 			tasks.push(task);
 

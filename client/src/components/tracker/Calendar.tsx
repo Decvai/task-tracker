@@ -17,8 +17,8 @@ export const Calendar = () => {
 		history.push(`/calendar/days/${dateStr}`);
 	};
 
-	const mouseMoveHandler = (e: MouseEvent) => {
-		const calendarWrapper = e.currentTarget;
+	const mouseMoveHandler = (event: MouseEvent) => {
+		const calendarWrapper = event.currentTarget;
 
 		const rect = calendarWrapper.getBoundingClientRect();
 
@@ -27,8 +27,8 @@ export const Calendar = () => {
 
 		if (!shadow) throw new Error('Shadow element is missing');
 
-		shadow.style.left = `${e.clientX - rect.left}px`;
-		shadow.style.top = `${e.clientY - rect.top}px`;
+		shadow.style.left = `${event.clientX - rect.left}px`;
+		shadow.style.top = `${event.clientY - rect.top}px`;
 		// });
 	};
 
