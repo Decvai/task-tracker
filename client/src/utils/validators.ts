@@ -31,7 +31,7 @@ export const newTaskValidate = ({
 
 type NameErrors = Pick<ValidateErrors, 'name'>;
 type NameValues = Pick<ValidateValues, 'name'>;
-export const nameValidate = (errors: NameErrors, { name }: NameValues) => {
+const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	if (!name) {
 		errors.name = 'Required';
 	} else if (name.length > 50) {
@@ -44,7 +44,7 @@ type HoursValues = Pick<
 	ValidateValues,
 	'hoursFrom' | 'hoursTo' | 'dateIntervalFrom'
 >;
-export const hoursValidate = (
+const hoursValidate = (
 	errors: HoursErrors,
 	{ hoursFrom, hoursTo, dateIntervalFrom }: HoursValues
 ) => {
@@ -74,7 +74,7 @@ type DateIntervalValues = Pick<
 	ValidateValues,
 	'dateIntervalFrom' | 'dateIntervalTo'
 >;
-export const dateIntervalValidate = (
+const dateIntervalValidate = (
 	errors: DateIntervalErrors,
 	{ dateIntervalFrom, dateIntervalTo }: DateIntervalValues
 ) => {

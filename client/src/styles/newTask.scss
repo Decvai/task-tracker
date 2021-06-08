@@ -103,11 +103,16 @@
 			font-size: 17px;
 			cursor: pointer !important;
 			outline: none;
+
+			&:hover {
+				background-color: #222222;
+			}
+
+			&:active {
+				transform: translateY(1px);
+			}
 		}
 
-		.submit:hover {
-			background-color: #222222;
-		}
 		.loading {
 			font-size: 0;
 			width: 30px;

@@ -3,9 +3,12 @@
 	align-items: center;
 	flex-direction: column;
 	flex-grow: 1;
-	padding: 25px;
+
+	padding: 25px 25px 50px 25px;
+
 	&__header {
 		align-self: flex-start;
+
 		width: 100%;
 		margin: 0 0 15px 0;
 		margin: 0 0 30px 0;
@@ -17,8 +20,11 @@
 		a {
 			display: flex;
 			align-items: center;
+
 			height: 30px;
+
 			text-decoration: none;
+
 			color: #fff;
 			img {
 				max-height: 100%;
@@ -29,6 +35,7 @@
 
 	&__selected-day {
 		font-size: 1.3rem;
+
 		text-align: center;
 		text-decoration: underline;
 	}
@@ -38,6 +45,7 @@
 
 		table {
 			width: 100%;
+
 			background-color: rgb(61, 61, 61);
 		}
 
@@ -50,6 +58,7 @@
 
 	&__status-select {
 		font-size: 1rem;
+
 		color: #fff;
 		border: none;
 		background-color: transparent;
@@ -57,14 +66,18 @@
 
 	&__status {
 		position: relative;
+
 		min-width: 120px;
+
 		cursor: pointer;
 		text-align: center;
 	}
 
 	&__status.show &__status-list {
 		display: block;
+
 		padding: 10px;
+
 		background-color: #fff;
 	}
 
@@ -73,13 +86,18 @@
 		z-index: 10;
 		top: 100%;
 		left: -5%;
+
 		display: none;
+
 		width: 110%;
+
 		cursor: default;
+
 		border-radius: 5px;
 		& > * {
 			margin: 0 0 5px 0;
 			padding: 10px;
+
 			cursor: pointer;
 		}
 
@@ -91,7 +109,9 @@
 			position: absolute;
 			top: calc(var(--pseudoElHeight) * -1);
 			left: calc(50% - var(--pseudoElWidth));
+
 			content: '';
+
 			border-right: var(--pseudoElWidth) solid transparent;
 			border-bottom: var(--pseudoElWidth) solid rgb(243, 243, 243);
 			border-left: var(--pseudoElWidth) solid transparent;
@@ -123,6 +143,7 @@
 
 	&__add-task {
 		cursor: pointer;
+
 		background-color: rgba(78, 78, 78, 0.651);
 	}
 
@@ -140,19 +161,24 @@
 		z-index: 3;
 		top: 5%;
 		left: -5px;
+
 		display: flex;
 		overflow: hidden;
 		align-items: center;
 		justify-content: center;
+
 		width: 8px;
 		height: 90%;
+
 		cursor: pointer;
 		transition: all var(--transitionDelay);
 		text-align: center;
+
 		background-color: rgb(72, 93, 162);
 
 		span {
 			transition: opacity var(--transitionDelay);
+
 			opacity: 0;
 		}
 
@@ -193,34 +219,36 @@
 
 		&-name {
 			flex-grow: 1;
+
 			margin: 0 5% 0 0;
 			padding: 5px;
+
 			color: #fff;
 			border: none;
 			background-color: transparent;
 		}
 
 		&-hours {
-			margin: 0 3% 0 0;
 			position: relative;
+
+			margin: 0 3% 0 0;
 
 			&-from,
 			&-to {
-				transition: all var(--transitionDelay);
-
-				color: #fff;
-				background-color: transparent;
-				border: 1px solid #fff;
-				border-radius: 5px;
 				padding: 5px;
 
+				transition: all var(--transitionDelay);
+
+				opacity: 0;
+				color: #fff;
+				border: 1px solid #fff;
+				border-radius: 5px;
 				outline: none;
+				background-color: transparent;
 
 				&::-webkit-calendar-picker-indicator {
 					filter: invert(0.75);
 				}
-
-				opacity: 0;
 				&.show {
 					opacity: 1;
 				}
@@ -228,8 +256,9 @@
 		}
 
 		&-separator {
+			margin: 0 5px;
+
 			opacity: 0;
-			margin: 0px 5px;
 			&.show {
 				opacity: 1;
 			}
@@ -241,37 +270,44 @@
 
 		&-confirm {
 			padding: 0 15px;
+
+			cursor: pointer;
 			transition: all var(--transitionDelay);
 			transform: translateX(100vw);
 
 			color: #fff;
-			background-color: rgb(72, 93, 162);
 			border-radius: 3px;
-
-			cursor: pointer;
+			background-color: rgb(72, 93, 162);
 			&.show {
 				transform: translateX(0);
+			}
+
+			&:disabled {
+				cursor: not-allowed;
 			}
 		}
 
 		&-error {
-			color: red;
+			font-weight: 500;
+
 			position: absolute;
 			top: 110%;
 			left: 0;
-			background-color: #fff;
-			font-weight: 500;
-			border-radius: 5px;
-			padding: 5px;
 
 			display: flex;
-			justify-content: center;
 			align-items: flex-start;
+			justify-content: center;
+
+			padding: 5px;
+
+			color: red;
+			border-radius: 5px;
+			background-color: #fff;
 
 			img {
 				max-width: 20px;
 				max-height: 20px;
-				margin: 0px 3px 0px 0px;
+				margin: 0 3px 0 0;
 			}
 		}
 	}
@@ -280,14 +316,14 @@
 		width: 100%;
 		min-height: 70px;
 		padding: 5px;
+
 		resize: none;
+
 		color: #fff;
 		background-color: rgba(39, 39, 39, 0.747);
 	}
-}
 
-@media (max-width: 500px) {
-	.day {
-		padding: 5px;
+	@media (max-width: 500px) {
+		padding: 5px 5px 50px 5px;
 	}
 }
