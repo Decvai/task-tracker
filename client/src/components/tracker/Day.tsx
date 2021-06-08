@@ -81,7 +81,10 @@ export const Day = () => {
 
 	const addNewTask = async () => {
 		// Todo send fetch to the server..
-		if (hours.from > hours.to || hours.from < getCurrentHours()) {
+		if (
+			hours.from &&
+			(hours.from > hours.to || hours.from < getCurrentHours())
+		) {
 			setHoursError('Hours is not correct');
 			return;
 		}

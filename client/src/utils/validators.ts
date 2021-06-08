@@ -20,19 +20,37 @@ export const newTaskValidate = ({
 	dateIntervalFrom,
 	dateIntervalTo,
 }: ValidateValues) => {
-	const today = getToday();
-	const currentHours = getCurrentHours();
-
 	const errors = {} as ValidateErrors;
 
-	// Name
+	nameValidate(errors, { name });
+	hoursValidate(errors, { hoursFrom, hoursTo, dateIntervalFrom });
+	dateIntervalValidate(errors, { dateIntervalFrom, dateIntervalTo });
+
+	return errors;
+};
+
+type NameErrors = Pick<ValidateErrors, 'name'>;
+type NameValues = Pick<ValidateValues, 'name'>;
+export const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	if (!name) {
 		errors.name = 'Required';
 	} else if (name.length > 50) {
 		errors.name = 'Must be 50 characters or less';
 	}
+};
 
-	// Expected time
+type HoursErrors = Pick<ValidateErrors, 'hoursFrom' | 'hoursTo'>;
+type HoursValues = Pick<
+	ValidateValues,
+	'hoursFrom' | 'hoursTo' | 'dateIntervalFrom'
+>;
+export const hoursValidate = (
+	errors: HoursErrors,
+	{ hoursFrom, hoursTo, dateIntervalFrom }: HoursValues
+) => {
+	const today = getToday();
+	const currentHours = getCurrentHours();
+
 	if ((!hoursFrom && hoursTo) || (hoursFrom && !hoursTo)) {
 		errors.hoursFrom = errors.hoursTo =
 			'You must include both time dates or delete them';
@@ -46,8 +64,22 @@ export const newTaskValidate = ({
 	) {
 		errors.hoursFrom = 'The time must be greater than the current one';
 	}
+};
 
-	// Date interval
+type DateIntervalErrors = Pick<
+	ValidateErrors,
+	'dateIntervalFrom' | 'dateIntervalTo'
+>;
+type DateIntervalValues = Pick<
+	ValidateValues,
+	'dateIntervalFrom' | 'dateIntervalTo'
+>;
+export const dateIntervalValidate = (
+	errors: DateIntervalErrors,
+	{ dateIntervalFrom, dateIntervalTo }: DateIntervalValues
+) => {
+	const today = getToday();
+
 	if (!dateIntervalFrom && !dateIntervalTo) {
 		errors.dateIntervalFrom = 'Required';
 		errors.dateIntervalTo = 'Required';
@@ -63,6 +95,4 @@ export const newTaskValidate = ({
 	} else if (dateIntervalFrom < today) {
 		errors.dateIntervalFrom = "The date 'from must be greater than today";
 	}
-
-	return errors;
 };

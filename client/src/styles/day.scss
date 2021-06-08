@@ -203,7 +203,6 @@
 		&-hours {
 			margin: 0 3% 0 0;
 			position: relative;
-			// overflow-y: auto;
 
 			&-from,
 			&-to {
@@ -212,8 +211,8 @@
 				color: #fff;
 				background-color: transparent;
 				border: 1px solid #fff;
-				padding: 3px;
 				border-radius: 5px;
+				padding: 5px;
 
 				outline: none;
 
