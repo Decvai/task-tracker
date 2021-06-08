@@ -1,30 +1,35 @@
 import { Link, useParams } from 'react-router-dom';
 import { Status } from './Status';
 import GoBack from '../../assets/go-back.png';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Loader } from '../../utils/Loader/Loader';
-import { fakeFetch, fakePostFetch, TimeInterval } from '../../api/tasks';
+import { fakeFetch, fakePostFetch } from '../../api/tasks';
 import { Task, statusList } from '../../api/tasks';
-import { getCurrentHours, getToday } from '../../utils/helpers';
+import { getToday } from '../../utils/helpers';
 import ErrorIcon from '../../assets/error.png';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { newTaskValidate, ValidateValues } from '../../utils/validators';
 
 interface ParamTypes {
 	readonly id: string;
 }
 
 export const Day = () => {
-	const [isAdding, setIsAdding] = useState<boolean>(false);
-	const [taskName, setTaskName] = useState<string>('');
-	const [hours, setHours] = useState<TimeInterval>({
-		from: '',
-		to: '',
-	});
-	const [hoursError, setHoursError] = useState<string>('');
+	const { id } = useParams<ParamTypes>();
+
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length : 6;
 	let indexNumber = 0;
 
-	const { id } = useParams<ParamTypes>();
+	const today = getToday();
+	const initialValues: ValidateValues = {
+		name: '',
+		hoursFrom: '',
+		hoursTo: '',
+		dateIntervalFrom: today,
+		dateIntervalTo: today,
+		notes: '',
+	};
 
 	useEffect(() => {
 		let isMounted = true;
@@ -66,52 +71,41 @@ export const Day = () => {
 		setTasks(tasks.filter(task => task.id !== id));
 	};
 
-	const changeNameHandler = (event: ChangeEvent<HTMLInputElement>) => {
-		const name = event.target.value;
-
-		setTaskName(name);
-
-		if (name) {
-			setIsAdding(true);
-			return;
-		}
-
-		setIsAdding(false);
-	};
-
-	const addNewTask = async () => {
-		// Todo send fetch to the server..
-		if (hours.from > hours.to || hours.from < getCurrentHours()) {
-			setHoursError('Hours is not correct');
-			return;
-		}
-
+	const addNewTask = async (
+		{
+			name,
+			hoursFrom,
+			hoursTo,
+			dateIntervalFrom,
+			dateIntervalTo,
+			notes,
+		}: ValidateValues,
+		{ resetForm }: FormikHelpers<ValidateValues>
+	) => {
 		const id = new Date().getTime().toLocaleString();
-		const today = getToday();
-
 		const newTask: Task = {
 			id,
-			name: taskName,
-			status: statusList.blank,
+			name,
 			hours: {
-				from: hours.from,
-				to: hours.to,
+				from: hoursFrom,
+				to: hoursTo,
 			},
 			dateInterval: {
-				from: today,
-				to: today,
+				from: dateIntervalFrom,
+				to: dateIntervalTo,
 			},
-			notes: '',
+			notes,
+			status: statusList.blank,
 		};
 		setTasks([...tasks, newTask]);
-		setTaskName('');
-		setIsAdding(false);
+		resetForm();
 
+		// Todo send fetch to the server..
 		try {
 			await fakePostFetch(newTask);
 		} catch (err) {
 			alert(JSON.stringify(err));
-			deleteTask(id);
+			setTasks(tasks.filter(task => task.id !== id));
 		}
 	};
 
@@ -174,100 +168,94 @@ export const Day = () => {
 									colSpan={columnsNumber}
 								>
 									<div className='day__remove-task fake'></div>
-									<form>
-										<input
-											className='day__add-task-name'
-											value={taskName}
-											type='text'
-											placeholder='+ Add'
-											onChange={changeNameHandler}
-										/>
-										<div className='day__add-task-hours'>
-											<input
-												className={
-													isAdding
-														? 'day__add-task-hours-from show'
-														: 'day__add-task-hours-from'
-												}
-												onChange={e => {
-													const hoursFrom =
-														e.target.value;
-													setHours({
-														...hours,
-														from: hoursFrom,
-													});
-												}}
-												disabled={!isAdding}
-												type='time'
-											/>
-											<span
-												className={
-													isAdding
-														? 'day__add-task-separator show'
-														: 'day__add-task-separator'
-												}
-											>
-												—
-											</span>
-											<input
-												className={
-													isAdding
-														? 'day__add-task-hours-to show'
-														: 'day__add-task-hours-to'
-												}
-												onChange={e => {
-													const hoursTo =
-														e.target.value;
-													setHours({
-														...hours,
-														to: hoursTo,
-													});
-												}}
-												disabled={!isAdding}
-												type='time'
-											/>
-											{isAdding && hoursError && (
-												<div className='day__add-task-error'>
-													<img
-														src={ErrorIcon}
-														alt='ErrorIcon'
+									<Formik
+										initialValues={initialValues}
+										onSubmit={addNewTask}
+										validate={newTaskValidate}
+									>
+										{({
+											values: { name },
+											errors,
+											isValid,
+										}) => (
+											<Form>
+												<Field
+													className='day__add-task-name'
+													name='name'
+													type='text'
+													placeholder='+ Add'
+												/>
+												{name && errors.name && (
+													<div className='day__add-task-error'>
+														<img
+															src={ErrorIcon}
+															alt='ErrorIcon'
+														/>
+														<span>
+															{errors.name}
+														</span>
+													</div>
+												)}
+												<div className='day__add-task-hours'>
+													<Field
+														className={
+															name
+																? 'day__add-task-hours-from show'
+																: 'day__add-task-hours-from'
+														}
+														name='hoursFrom'
+														type='time'
+														disabled={!name}
 													/>
-													<span>
-														{/* Lorem ipsum dolor sit
-														amet consectetur
-														adipisicing elit. Soluta
-														provident aspernatur,
-														sunt cupiditate,
-														aliquam, reiciendis
-														natus sed voluptate
-														totam laboriosam quidem
-														accusamus animi debitis
-														asperiores laborum
-														mollitia modi id
-														corporis ipsa odit ullam
-														quae. Et omnis iusto
-														incidunt architecto quia
-														odit ullam harum
-														distinctio nam, id
-														explicabo dolor ad
-														asperiores! */}
-														{hoursError}
+													<span
+														className={
+															name
+																? 'day__add-task-separator show'
+																: 'day__add-task-separator'
+														}
+													>
+														—
 													</span>
+													<Field
+														className={
+															name
+																? 'day__add-task-hours-to show'
+																: 'day__add-task-hours-to'
+														}
+														name='hoursTo'
+														type='time'
+														disabled={!name}
+													/>
+													{name && (
+														<ErrorMessage name='hoursFrom'>
+															{msg => (
+																<div className='day__add-task-error'>
+																	<img
+																		src={
+																			ErrorIcon
+																		}
+																		alt='ErrorIcon'
+																	/>
+																	{msg}
+																</div>
+															)}
+														</ErrorMessage>
+													)}
 												</div>
-											)}
-										</div>
-										<input
-											className={
-												isAdding
-													? 'day__add-task-confirm show'
-													: 'day__add-task-confirm'
-											}
-											type='button'
-											value='Add'
-											onClick={addNewTask}
-											disabled={!isAdding}
-										/>
-									</form>
+
+												<input
+													className={
+														name
+															? 'day__add-task-confirm show'
+															: 'day__add-task-confirm'
+													}
+													type='submit'
+													value='Add'
+													disabled={!isValid}
+												/>
+											</Form>
+										)}
+									</Formik>
 								</td>
 							</tr>
 						</tbody>
