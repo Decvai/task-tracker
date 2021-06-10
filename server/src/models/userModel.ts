@@ -1,11 +1,9 @@
 import { Document, model, Schema } from 'mongoose';
-import { ITask } from './taskModel';
 
-interface IUser extends Document {
+export interface IUser extends Document {
 	login: string;
 	registeredAt: Date;
 	avaUrl: String;
-	tasks: ITask['_id'][];
 }
 
 const UserSchema: Schema = new Schema({
@@ -19,10 +17,6 @@ const UserSchema: Schema = new Schema({
 		required: true,
 	},
 	avaUrl: String,
-	tasks: {
-		type: [Schema.Types.ObjectId],
-		required: true,
-	},
 });
 
-export const userModel = model<IUser>('User', UserSchema);
+export const User = model<IUser>('User', UserSchema);
