@@ -26,6 +26,6 @@ export const authMiddleware = async (
 		req.currentUser = user;
 		next();
 	} catch (err) {
-		return res.status(401).json({ message: err });
+		return res.status(401).json({ message: err.message });
 	}
 };

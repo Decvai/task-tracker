@@ -1,16 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
+import { IStatus, ITimeInterval } from '../shared/interfaces';
 import { IUser } from './userModel';
-
-interface IStatus {
-	readonly id: string;
-	color: string;
-	text: string;
-}
-
-interface ITimeInterval {
-	from: string;
-	to: string;
-}
 
 // db.tasks.insert({
 // 	name: 'new name',
@@ -41,37 +31,32 @@ export interface ITask extends Document {
 	owner: IUser['_id'];
 }
 
+const StatusSchema: Schema = new Schema({
+	id: {
+		type: String,
+		required: true,
+	},
+	color: {
+		type: String,
+		required: true,
+	},
+	text: {
+		type: String,
+		required: true,
+	},
+});
+
 const TaskSchema: Schema = new Schema({
 	name: {
 		type: String,
 		required: true,
 	},
 	status: {
-		type: {
-			id: {
-				type: String,
-				required: true,
-				unique: true,
-			},
-			color: {
-				type: String,
-				required: true,
-				unique: true,
-			},
-			text: {
-				type: String,
-				required: true,
-			},
-		},
+		type: StatusSchema,
+		required: true,
 	},
-	hours: {
-		from: String,
-		to: String,
-	},
-	dateInterval: {
-		from: String,
-		to: String,
-	},
+	hours: Object,
+	dateInterval: Object,
 	notes: String,
 	day: {
 		type: String,
