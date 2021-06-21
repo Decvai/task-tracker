@@ -1,17 +1,22 @@
 import { Request, Response } from 'express';
-import { check } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { ITask, Task } from '../models/taskModel';
 
 export const taskController = {
 	async getTasks(req: Request, res: Response) {
-		const day = req.query.day as string;
-		if (!day) {
-			return res.status(400).json({ message: 'Day is not specified' });
-		}
-
 		try {
-			const tasks: ITask[] = await Task.find({ day }); // Todo: user: req.user.id
-			// console.log(tasks);
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				return res
+					.status(400)
+					.json({ message: 'Incorrect request', errors });
+			}
+
+			const day = req.query.day as string;
+			const tasks: ITask[] = await Task.find({
+				day,
+				owner: req.currentUser.id,
+			});
 
 			res.json(tasks);
 		} catch (err) {
@@ -21,12 +26,15 @@ export const taskController = {
 	},
 
 	async postTask(req: Request, res: Response) {
-		const { task } = req.body;
-		if (!task) {
-			return res.status(400).json({ message: 'Task is not specified' });
-		}
-
 		try {
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				return res
+					.status(400)
+					.json({ message: 'Incorrect request', errors });
+			}
+
+			const task: ITask = req.body.task;
 			const newTask = await Task.create({
 				name: task.name,
 				status: task.status,
@@ -34,10 +42,9 @@ export const taskController = {
 				dateInterval: task.dateInterval,
 				notes: task.notes,
 				day: req.query.day,
-				// owner: req.user.id
-				owner: '60c300b06040c51df4ea218a',
+				owner: req.currentUser.id,
 			});
-			// await newTask.save();
+			await newTask.save();
 
 			res.json(newTask);
 		} catch (err) {

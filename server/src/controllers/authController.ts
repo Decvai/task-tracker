@@ -1,24 +1,18 @@
-import { Request, Response, Router } from 'express';
-import { check, validationResult } from 'express-validator';
+import { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import { User } from '../models/userModel';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-// import authMiddleware from '../middleware/auth.middleware';
 import { config } from '../config/default';
-
-export const authValidator = {
-	registration: [
-		check('email', 'Incorrect email').isEmail(),
-		check('password', 'Incorrect password').isLength({ min: 3, max: 12 }),
-	],
-};
 
 export const authController = {
 	async registration(req: Request, res: Response) {
 		try {
 			const errors = validationResult(req);
 			if (!errors.isEmpty()) {
-				return res.status(400).json({ errors: errors.array() });
+				return res
+					.status(400)
+					.json({ message: 'Incorrect request', errors });
 			}
 
 			const { email, password } = req.body;
@@ -48,17 +42,21 @@ export const authController = {
 	async login(req: Request, res: Response) {
 		try {
 			const { email, password } = req.body;
+
 			const user = await User.findOne({ email });
-			console.log(user);
 			if (!user) {
 				return res.status(400).json({ message: 'User not found' });
 			}
+
 			const isPassValid = bcrypt.compareSync(password, user.password);
-			if (!isPassValid)
+			if (!isPassValid) {
 				return res.status(400).json({ message: 'Invalid password' });
+			}
+
 			const token = jwt.sign({ id: user.id }, config.secretKey, {
-				expiresIn: '1h',
+				// expiresIn: '1h', // Todo: uncomment
 			});
+
 			return res.json({
 				token,
 				user: {
@@ -75,12 +73,13 @@ export const authController = {
 	},
 
 	async auth(req: Request, res: Response) {
-		const user = req.currentUser;
-
 		try {
+			const user = req.currentUser;
+
 			const token = jwt.sign({ id: user.id }, config.secretKey, {
 				expiresIn: '1h',
 			});
+
 			return res.json({
 				token,
 				user: {
