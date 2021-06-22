@@ -4,7 +4,8 @@ export interface IUser extends Document {
 	email: string;
 	password: string;
 	registeredAt: Date;
-	avatar: String;
+	avatar: string;
+	achievements: string[]; // Array of achievement IDs
 }
 
 const UserSchema: Schema = new Schema({
@@ -22,6 +23,7 @@ const UserSchema: Schema = new Schema({
 		required: true,
 	},
 	avatar: String,
+	achievements: Array,
 });
 
 export const User = model<IUser>('User', UserSchema);
