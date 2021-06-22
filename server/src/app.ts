@@ -1,6 +1,7 @@
-import express, { Application, Request, Response } from 'express';
+import express from 'express';
 import mongoose from 'mongoose';
 import { config } from './config/default';
+import { achievementRouter } from './routes/achievementRoute';
 import { authRouter } from './routes/authRoute';
 import { taskRouter } from './routes/taskRoute';
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/tasks', taskRouter);
+app.use('/api/achievements', achievementRouter);
 
 async function start() {
 	try {
