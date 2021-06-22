@@ -5,6 +5,7 @@ import { getCurrentHours, getToday } from './helpers';
 export const authValidator = {
 	registration: [
 		check('email', 'Incorrect email').isEmail(),
+		check('nickname', 'Incorrect nickname').isLength({ min: 3, max: 12 }),
 		check('password', 'Incorrect password').isLength({ min: 3, max: 12 }),
 	],
 };

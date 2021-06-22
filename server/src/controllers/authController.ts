@@ -15,7 +15,7 @@ export const authController = {
 					.json({ message: 'Incorrect request', errors });
 			}
 
-			const { email, password } = req.body;
+			const { email, nickname, password } = req.body;
 
 			const candidate = await User.findOne({ email });
 			if (candidate) {
@@ -28,6 +28,7 @@ export const authController = {
 
 			await User.create({
 				email,
+				nickname,
 				password: hashPassword,
 				registeredAt: currentTime,
 			});
@@ -62,6 +63,7 @@ export const authController = {
 				user: {
 					id: user.id,
 					email: user.email,
+					nickname: user.nickname,
 					registeredAt: user.registeredAt,
 					avatar: user.avatar,
 				},
@@ -85,6 +87,7 @@ export const authController = {
 				user: {
 					id: user.id,
 					email: user.email,
+					nickname: user.nickname,
 					registeredAt: user.registeredAt,
 					avatar: user.avatar,
 				},
