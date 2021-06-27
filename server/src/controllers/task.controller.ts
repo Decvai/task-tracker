@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
-import { ITask, Task } from '../models/taskModel';
+import { ITask, Task } from '../models/task.model';
 
 export const taskController = {
 	async getTasks(req: Request, res: Response) {
