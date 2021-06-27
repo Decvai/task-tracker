@@ -2,6 +2,7 @@ import { Sidebar } from './Sidebar';
 import { Calendar } from './Calendar';
 import { Route, Switch } from 'react-router';
 import { Day } from './Day';
+import { Redirect } from 'react-router-dom';
 
 export const Tracker = () => {
 	return (
@@ -9,8 +10,10 @@ export const Tracker = () => {
 			<Sidebar />
 
 			<Switch>
-				<Route exact path='/calendar' component={Calendar} />
-				<Route path='/calendar/days/:id' component={Day} />
+				<Route exact path='/' component={Calendar} />
+				<Route path='/days/:id' component={Day} />
+
+				<Redirect to='/' />
 			</Switch>
 		</div>
 	);

@@ -14,7 +14,7 @@ export const Calendar = () => {
 	const shadowRef = useRef<HTMLDivElement>(null);
 
 	const dateClickHandler = ({ dateStr }: DateClickArg) => {
-		history.push(`/calendar/days/${dateStr}`);
+		history.push(`/days/${dateStr}`);
 	};
 
 	const mouseMoveHandler = (event: MouseEvent) => {
