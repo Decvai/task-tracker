@@ -1,10 +1,10 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { config } from './config/default';
-import { achievementRouter } from './routes/achievementRoute';
-import { authRouter } from './routes/authRoute';
-import { statusRouter } from './routes/statuseRoute';
-import { taskRouter } from './routes/taskRoute';
+import { achievementRouter } from './routes/achievement.route';
+import { authRouter } from './routes/auth.route';
+import { statusRouter } from './routes/statuse.route';
+import { taskRouter } from './routes/task.route';
 
 const app = express();
 

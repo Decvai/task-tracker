@@ -1,6 +1,6 @@
 import { Document, model, Schema } from 'mongoose';
 import { IStatus, ITimeInterval } from '../shared/interfaces';
-import { IUser } from './userModel';
+import { IUser } from './user.model';
 
 export interface ITask extends Document {
 	name: string;
