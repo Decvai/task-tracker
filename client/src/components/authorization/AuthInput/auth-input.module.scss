@@ -1,0 +1,51 @@
+.input {
+	color: #444;
+	font-size: 1.5em;
+	outline: none; // Chrome outline
+	box-shadow: none; // Firefox outline
+	border-radius: 0; // mobile Safari
+	border: solid 1px;
+	border-top: none;
+	border-color: #bbb;
+	background: transparent;
+	display: block;
+	height: 2em;
+	padding: 0 3%;
+
+	transition: border 0.25s;
+
+	&:focus {
+		color: #111;
+		border-color: #444;
+		transform: scale(1.01);
+
+		.span {
+			&:focus {
+				transform: scale(1.01);
+			}
+		}
+	}
+}
+
+.span {
+	position: relative;
+	z-index: 1;
+
+	&::before,
+	&:after {
+		content: '';
+		position: absolute;
+		display: block;
+		width: 0.8em;
+		height: 3em;
+		top: 0;
+		background: #fff;
+	}
+
+	&::before {
+		left: -0.5em;
+	}
+	&::after {
+		right: -0.5em;
+	}
+}

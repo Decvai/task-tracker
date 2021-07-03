@@ -44,6 +44,7 @@ export const authController = {
 		try {
 			const { email, password } = req.body;
 
+			console.log(req.body);
 			const user = await User.findOne({ email });
 			if (!user) {
 				return res.status(400).json({ message: 'User not found' });

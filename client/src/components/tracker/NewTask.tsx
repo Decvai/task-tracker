@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react';
-import { fakePostFetch, statusList, Task, TimeInterval } from '../../api/tasks';
+import { Dispatch, FC, SetStateAction } from 'react';
+import { fakePostFetch, statusList, Task } from '../../api/tasks';
 import { getToday } from '../../utils/helpers';
 import { newTaskValidate, ValidateValues } from '../../utils/validators';
 
@@ -21,7 +21,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 		notes: '',
 	};
 
-	const onSubmit = async (
+	const submitHandler = async (
 		{
 			name,
 			hoursFrom,
@@ -69,7 +69,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 		>
 			<Formik
 				initialValues={initialValues}
-				onSubmit={onSubmit}
+				onSubmit={submitHandler}
 				validate={newTaskValidate}
 			>
 				{({ isSubmitting, values, errors, touched }) => (
@@ -208,7 +208,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 							></Field>
 						</div>
 
-						<div className='new-task__confirm'>
+						<div className='confirm-btn new-task__confirm'>
 							<input
 								className={
 									isSubmitting ? 'submit loading' : 'submit'

@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import { config } from './config/default';
+import cors from 'cors';
 import { achievementRouter } from './routes/achievement.route';
 import { authRouter } from './routes/auth.route';
 import { statusRouter } from './routes/statuse.route';
@@ -11,6 +12,7 @@ const app = express();
 const PORT = config.port;
 const mongodbUri: string = config.mongodbUri!;
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/api/auth', authRouter);

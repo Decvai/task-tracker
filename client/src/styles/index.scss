@@ -8,7 +8,7 @@
 	&::-webkit-scrollbar-track {
 		border-radius: 10px;
 		background-color: #f5f5f5;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	}
 
 	&::-webkit-scrollbar {
@@ -20,7 +20,7 @@
 	&::-webkit-scrollbar-thumb {
 		border-radius: 10px;
 		background-color: #555;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	}
 }
 
@@ -29,6 +29,7 @@
 }
 
 body {
+	min-height: 100vh;
 	font-family: 'Roboto';
 
 	font-weight: 300;
@@ -40,11 +41,19 @@ body {
 	background: linear-gradient(rgb(63, 71, 77), rgb(47, 45, 56));
 }
 
+.flex-wrap {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@import './shared.scss';
 @import './authorization.scss';
 @import './tracker.scss';
 @import './calendar.scss';
 @import './day.scss';
-@import './newTask.scss';
+@import './new-task.scss';
 
 @media (max-width: 500px) {
 	:root {
