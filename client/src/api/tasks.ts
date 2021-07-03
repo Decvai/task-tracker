@@ -67,7 +67,7 @@ const tasks: Task[] = [
 	},
 	{
 		id: '02',
-		name: 'efwfewff task',
+		name: 'eeef task',
 		status: statusList.working,
 		hours: {
 			from: '4:30 AM',

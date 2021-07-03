@@ -1,4 +1,4 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useEffect } from 'react';
 import { Tracker } from './tracker/Tracker';
 import {
 	BrowserRouter as Router,
@@ -8,9 +8,18 @@ import {
 } from 'react-router-dom';
 import { Registration } from './authorization/Registration';
 import { Login } from './authorization/Login';
+import { useDispatch, useSelector } from 'react-redux';
+import { auth } from '../actions/user';
+
+export const authSelector = (state: any) => state.user.isAuth; // Todo: change any type
 
 export const App = () => {
-	const isAuth = true;
+	const isAuth = useSelector(authSelector);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(auth());
+	}, []);
 
 	const clickHandler = (event: MouseEvent<HTMLInputElement>) => {
 		console.log(event.target);
@@ -19,22 +28,17 @@ export const App = () => {
 	return (
 		<Router>
 			<div className='app' onClick={clickHandler}>
-				<div className='wrap'>
-					{isAuth ? (
-						<Switch>
-							<Route path='/' component={Tracker} />
-						</Switch>
-					) : (
-						<Switch>
-							<Route
-								path='/registration'
-								component={Registration}
-							/>
-							<Route path='/login' component={Login} />
-							<Redirect to='/login' />
-						</Switch>
-					)}
-				</div>
+				{isAuth ? (
+					<Switch>
+						<Route path='/' component={Tracker} />
+					</Switch>
+				) : (
+					<Switch>
+						<Route path='/registration' component={Registration} />
+						<Route path='/login' component={Login} />
+						<Redirect to='/login' />
+					</Switch>
+				)}
 			</div>
 		</Router>
 	);

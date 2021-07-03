@@ -11,4 +11,4 @@ authRouter.post(
 	authController.registration
 );
 authRouter.post('/login', authController.login);
-authRouter.get('/auth', authMiddleware, authController.auth);
+authRouter.get('/authorization', authMiddleware, authController.auth);

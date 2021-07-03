@@ -86,60 +86,6 @@
 		width: 150px;
 	}
 
-	&__confirm {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		margin: 5px 0px 0px 0px;
-
-		.submit {
-			appearance: none;
-			width: 100px;
-			height: 40px;
-			background-color: #111111;
-			border: 2px solid #ffffff;
-			border-radius: 10px;
-			color: #ffffff;
-			font-size: 17px;
-			cursor: pointer !important;
-			outline: none;
-
-			&:hover {
-				background-color: #222222;
-			}
-
-			&:active {
-				transform: translateY(1px);
-			}
-		}
-
-		.loading {
-			font-size: 0;
-			width: 30px;
-			height: 30px;
-			margin-top: 5px;
-			border-radius: 15px;
-			padding: 0;
-			border: 3px solid #000;
-			border-bottom: 3px solid rgba(255, 255, 255, 0);
-			border-left: 3px solid rgba(255, 255, 255, 0);
-			background-color: transparent !important;
-			animation-name: rotateAnimation;
-			animation-duration: 1s;
-			animation-delay: 0.2s;
-			animation-iteration-count: infinite;
-		}
-
-		@keyframes rotateAnimation {
-			0% {
-				transform: rotate(0deg);
-			}
-			100% {
-				transform: rotate(360deg);
-			}
-		}
-	}
-
 	&__name,
 	&__time {
 		&.error {
