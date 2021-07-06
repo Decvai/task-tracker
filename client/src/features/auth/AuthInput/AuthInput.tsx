@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import styles from './auth-input.module.scss';
+import styles from './AuthInput.module.scss';
 
 interface InputProps {
 	value: React.InputHTMLAttributes<HTMLInputElement>['value'];
