@@ -1,22 +1,25 @@
-import { FC, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { FC, FormEvent, useState } from 'react';
+import { useAppDispatch } from '../../app/hooks';
 import { AuthInput } from './AuthInput/AuthInput';
+import { loginAsync } from './auth.slice';
+import { Link } from 'react-router-dom';
 
-export const Registration: FC = () => {
+export const Login: FC = () => {
 	const [email, setEmail] = useState('');
-	const [nickname, setNickname] = useState('');
 	const [password, setPassword] = useState('');
-	const [confirmPassword, setConfirmPassword] = useState('');
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
+
+	const submitHandler = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+
+		dispatch(loginAsync({ email, password }));
+	};
 
 	return (
 		<div className='flex-wrap'>
 			<div className='authorization'>
-				<div className='authorization__header'>Sign up</div>
-				<form
-					className='authorization__form'
-					onSubmit={e => e.preventDefault()}
-				>
+				<div className='authorization__header'>Sign in</div>
+				<form className='authorization__form' onSubmit={submitHandler}>
 					<AuthInput
 						value={email}
 						setValue={setEmail}
@@ -24,22 +27,10 @@ export const Registration: FC = () => {
 						placeholder='Email'
 					/>
 					<AuthInput
-						value={nickname}
-						setValue={setNickname}
-						type='text'
-						placeholder='Nickname'
-					/>
-					<AuthInput
 						value={password}
 						setValue={setPassword}
 						type='password'
 						placeholder='Password'
-					/>
-					<AuthInput
-						value={confirmPassword}
-						setValue={setConfirmPassword}
-						type='password'
-						placeholder='Confirm password'
 					/>
 
 					<div className='confirm-btn authorization__confirm'>
@@ -54,6 +45,10 @@ export const Registration: FC = () => {
 						/>
 					</div>
 				</form>
+
+				<Link to='/registration' className='authorization__sign-up'>
+					Sign up for an account
+				</Link>
 			</div>
 		</div>
 	);
