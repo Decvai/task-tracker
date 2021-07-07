@@ -1,6 +1,6 @@
-import { getCurrentHours, getToday } from './helpers';
+import { getCurrentHours, getToday } from '../helpers';
 
-export interface ValidateValues {
+export interface NewTaskValidateValues {
 	name: string;
 	hoursFrom: string;
 	hoursTo: string;
@@ -9,8 +9,8 @@ export interface ValidateValues {
 	notes: string;
 }
 
-export type ValidateErrors = {
-	[K in keyof ValidateValues]: string;
+export type NewTaskValidateErrors = {
+	[K in keyof NewTaskValidateValues]: string;
 };
 
 export const newTaskValidate = ({
@@ -19,8 +19,8 @@ export const newTaskValidate = ({
 	hoursTo,
 	dateIntervalFrom,
 	dateIntervalTo,
-}: ValidateValues) => {
-	const errors = {} as ValidateErrors;
+}: NewTaskValidateValues) => {
+	const errors = {} as NewTaskValidateErrors;
 
 	nameValidate(errors, { name });
 	hoursValidate(errors, { hoursFrom, hoursTo, dateIntervalFrom });
@@ -29,8 +29,8 @@ export const newTaskValidate = ({
 	return errors;
 };
 
-type NameErrors = Pick<ValidateErrors, 'name'>;
-type NameValues = Pick<ValidateValues, 'name'>;
+type NameErrors = Pick<NewTaskValidateErrors, 'name'>;
+type NameValues = Pick<NewTaskValidateValues, 'name'>;
 const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	if (!name) {
 		errors.name = 'Required';
@@ -39,9 +39,9 @@ const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	}
 };
 
-type HoursErrors = Pick<ValidateErrors, 'hoursFrom' | 'hoursTo'>;
+type HoursErrors = Pick<NewTaskValidateErrors, 'hoursFrom' | 'hoursTo'>;
 type HoursValues = Pick<
-	ValidateValues,
+	NewTaskValidateValues,
 	'hoursFrom' | 'hoursTo' | 'dateIntervalFrom'
 >;
 const hoursValidate = (
@@ -67,11 +67,11 @@ const hoursValidate = (
 };
 
 type DateIntervalErrors = Pick<
-	ValidateErrors,
+	NewTaskValidateErrors,
 	'dateIntervalFrom' | 'dateIntervalTo'
 >;
 type DateIntervalValues = Pick<
-	ValidateValues,
+	NewTaskValidateValues,
 	'dateIntervalFrom' | 'dateIntervalTo'
 >;
 const dateIntervalValidate = (

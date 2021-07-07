@@ -1,8 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { registrationAsync } from './auth.slice';
-import { AuthInput } from './AuthInput/AuthInput';
+import { loginAsync, registrationAsync } from './auth.slice';
 
 export const Registration: FC = () => {
 	const [email, setEmail] = useState('');
@@ -11,10 +10,27 @@ export const Registration: FC = () => {
 	const [confirmPassword, setConfirmPassword] = useState('');
 	const dispatch = useAppDispatch();
 
+	const clearRegistrationForm = () => {
+		setEmail(() => '');
+		setNickname(() => '');
+		setPassword(() => '');
+		setConfirmPassword(() => '');
+	};
+
 	const submitHandler = (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		dispatch(registrationAsync({ email, nickname, password }));
+		const emailBuffer = email;
+		const passwordBuffer = password;
+		dispatch(registrationAsync({ email, nickname, password })).then(() => {
+			dispatch(
+				loginAsync({
+					email: emailBuffer,
+					password: passwordBuffer,
+				})
+			);
+		});
+		clearRegistrationForm();
 	};
 
 	return (
@@ -22,27 +38,37 @@ export const Registration: FC = () => {
 			<div className='authorization'>
 				<div className='authorization__header'>Sign up</div>
 				<form className='authorization__form' onSubmit={submitHandler}>
-					<AuthInput
+					<span className='authorization__span'></span>
+					<input
+						className='authorization__input'
 						value={email}
-						setValue={setEmail}
+						onChange={e => setEmail(e.target.value)}
 						type='text'
 						placeholder='Email'
 					/>
-					<AuthInput
+
+					<span className='authorization__span'></span>
+					<input
+						className='authorization__input'
 						value={nickname}
-						setValue={setNickname}
+						onChange={e => setNickname(e.target.value)}
 						type='text'
 						placeholder='Nickname'
 					/>
-					<AuthInput
+
+					<span className='authorization__span'></span>
+					<input
+						className='authorization__input'
 						value={password}
-						setValue={setPassword}
+						onChange={e => setPassword(e.target.value)}
 						type='password'
 						placeholder='Password'
 					/>
-					<AuthInput
+					<span className='authorization__span'></span>
+					<input
+						className='authorization__input'
 						value={confirmPassword}
-						setValue={setConfirmPassword}
+						onChange={e => setConfirmPassword(e.target.value)}
 						type='password'
 						placeholder='Confirm password'
 					/>

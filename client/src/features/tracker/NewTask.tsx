@@ -2,7 +2,10 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
 import { fakePostFetch, statusList, Task } from '../../api/tasks';
 import { getToday } from '../../utils/helpers';
-import { newTaskValidate, ValidateValues } from '../../utils/validators';
+import {
+	newTaskValidate,
+	NewTaskValidateValues,
+} from '../../utils/validators/new-task.validator';
 
 interface NewTaskProps {
 	active: boolean;
@@ -12,7 +15,7 @@ interface NewTaskProps {
 export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 	const today = getToday();
 
-	const initialValues: ValidateValues = {
+	const initialValues: NewTaskValidateValues = {
 		name: '',
 		hoursFrom: '',
 		hoursTo: '',
@@ -29,8 +32,8 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 			dateIntervalFrom,
 			dateIntervalTo,
 			notes,
-		}: ValidateValues,
-		{ resetForm }: FormikHelpers<ValidateValues>
+		}: NewTaskValidateValues,
+		{ resetForm }: FormikHelpers<NewTaskValidateValues>
 	) => {
 		const id = new Date().getTime().toLocaleString();
 		const newTask: Task = {

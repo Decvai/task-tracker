@@ -1,5 +1,5 @@
 import { API_URL } from '../../config';
-import { User } from '../../types/user.type';
+import { User } from '../../shared/user.type';
 import { RegistrationData } from './auth.slice';
 
 export interface AuthFetchResponse {

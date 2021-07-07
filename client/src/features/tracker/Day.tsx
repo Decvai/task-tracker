@@ -8,7 +8,10 @@ import { Task, statusList } from '../../api/tasks';
 import { getToday } from '../../utils/helpers';
 import ErrorIcon from '../../assets/error.png';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { newTaskValidate, ValidateValues } from '../../utils/validators';
+import {
+	newTaskValidate,
+	NewTaskValidateValues,
+} from '../../utils/validators/new-task.validator';
 
 interface ParamTypes {
 	readonly id: string;
@@ -22,7 +25,7 @@ export const Day = () => {
 	let indexNumber = 0;
 
 	const today = getToday();
-	const initialValues: ValidateValues = {
+	const initialValues: NewTaskValidateValues = {
 		name: '',
 		hoursFrom: '',
 		hoursTo: '',
@@ -79,8 +82,8 @@ export const Day = () => {
 			dateIntervalFrom,
 			dateIntervalTo,
 			notes,
-		}: ValidateValues,
-		{ resetForm }: FormikHelpers<ValidateValues>
+		}: NewTaskValidateValues,
+		{ resetForm }: FormikHelpers<NewTaskValidateValues>
 	) => {
 		const id = new Date().getTime().toLocaleString();
 		const newTask: Task = {

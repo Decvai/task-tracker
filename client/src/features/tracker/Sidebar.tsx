@@ -1,6 +1,14 @@
+import { useAppDispatch } from '../../app/hooks';
 import Avatar from '../../assets/avatar.jpg';
+import { logout } from '../auth/auth.slice';
 
 export const Sidebar = () => {
+	const dispatch = useAppDispatch();
+
+	const logoutHandler = () => {
+		dispatch(logout());
+	};
+
 	return (
 		<div className='sidebar'>
 			<div className='sidebar__profile'>
@@ -23,6 +31,9 @@ export const Sidebar = () => {
 				</div>
 				<p>Achievements</p>
 			</div>
+			<button onClick={logoutHandler} className='sidebar__logout'>
+				Logout
+			</button>
 		</div>
 	);
 };

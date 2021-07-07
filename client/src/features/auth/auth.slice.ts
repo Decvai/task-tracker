@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { User } from '../../types/user.type';
+import { User } from '../../shared/user.type';
 import {
 	fetchLogin,
 	AuthFetchResponse,
@@ -53,7 +53,12 @@ export const registrationAsync = createAsyncThunk<boolean, RegistrationData>(
 export const authSlice = createSlice({
 	name: 'auth',
 	initialState,
-	reducers: {},
+	reducers: {
+		logout: state => {
+			state.currentUser = initialState.currentUser;
+			state.isAuth = initialState.isAuth;
+		},
+	},
 	extraReducers: builder => {
 		builder
 			.addCase(loginAsync.fulfilled, (state, action) => {
@@ -71,7 +76,6 @@ export const authSlice = createSlice({
 				localStorage.setItem('token', token);
 			})
 			.addCase(authAsync.rejected, () => {
-				console.log('rejected');
 				localStorage.removeItem('token');
 			})
 			.addCase(registrationAsync.fulfilled, (_, action) => {
@@ -83,6 +87,8 @@ export const authSlice = createSlice({
 			});
 	},
 });
+
+export const { logout } = authSlice.actions;
 
 export const authSelector = (state: RootState) => state.auth.isAuth;
 
