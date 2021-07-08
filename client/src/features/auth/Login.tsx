@@ -1,111 +1,91 @@
-import { FC, FormEvent, useState } from 'react';
+import { FC, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
-import { AuthCredentials, loginAsync } from './auth.slice';
+import { AuthCredentials, loginAsync } from './authSlice';
 import { Link } from 'react-router-dom';
-import { Form, Formik } from 'formik';
-import { loginValidate } from '../../utils/validators/auth.validator';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import ErrorIcon from '../../assets/error.png';
+import { loginValidationSchema } from '../../utils/validators/authValidator';
 
 export const Login: FC = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
 	const dispatch = useAppDispatch();
+	const [loginError, setLoginError] = useState<string>('');
 
 	const initialValues: AuthCredentials = {
 		email: '',
 		password: '',
 	};
 
-	const clearLoginForm = () => {
-		setEmail(() => '');
-		setPassword(() => '');
-	};
-
-	// const submitHandler = (event: FormEvent<HTMLFormElement>) => {
-	// 	event.preventDefault();
-
-	// 	dispatch(loginAsync({ email, password }));
-	// 	clearLoginForm();
-	// };
-
-	const submitHandler = (credentials: AuthCredentials) => {
-		console.log(credentials);
+	const submitHandler = async (
+		credentials: AuthCredentials,
+		{ resetForm }: FormikHelpers<AuthCredentials>
+	) => {
+		try {
+			await dispatch(loginAsync(credentials));
+		} catch (err) {
+			setLoginError(err);
+		}
 	};
 
 	return (
 		<div className='flex-wrap'>
 			<div className='authorization'>
 				<div className='authorization__header'>Sign in</div>
-				{/* <form className='authorization__form' onSubmit={submitHandler}>
-					<span className='authorization__span'></span>
-					<input
-						className='authorization__input'
-						value={email}
-						onChange={e => setEmail(e.target.value)}
-						type='text'
-						placeholder='Email'
-					/>
-					<span className='authorization__span'></span>
-					<input
-						className='authorization__input'
-						value={password}
-						onChange={e => setPassword(e.target.value)}
-						type='password'
-						placeholder='Password'
-					/>
-
-					<div className='confirm-btn authorization__confirm'>
-						<input
-							className={
-								// isSubmitting ? 'submit loading' : 'submit'
-								'submit'
-							}
-							type='submit'
-							value='Continue'
-							// disabled={isSubmitting}
-						/>
-					</div>
-				</form> */}
 
 				<Formik
 					initialValues={initialValues}
 					onSubmit={submitHandler}
-					validate={loginValidate}
+					validationSchema={loginValidationSchema}
 				>
-					{() => {
-						<Form>test</Form>;
-					}}
-				</Formik>
-				{/* 
-				<form className='authorization__form' onSubmit={submitHandler}>
-					<span className='authorization__span'></span>
-					<input
-						className='authorization__input'
-						value={email}
-						onChange={e => setEmail(e.target.value)}
-						type='text'
-						placeholder='Email'
-					/>
-					<span className='authorization__span'></span>
-					<input
-						className='authorization__input'
-						value={password}
-						onChange={e => setPassword(e.target.value)}
-						type='password'
-						placeholder='Password'
-					/>
+					{({ isSubmitting }) => (
+						<Form className='authorization__form'>
+							<span className='authorization__span'></span>
+							<Field
+								id='email'
+								className='authorization__input'
+								name='email'
+								type='text'
+							/>
+							<ErrorMessage
+								className='error'
+								component='div'
+								name='email'
+							/>
 
-					<div className='confirm-btn authorization__confirm'>
-						<input
-							className={
-								// isSubmitting ? 'submit loading' : 'submit'
-								'submit'
-							}
-							type='submit'
-							value='Continue'
-							// disabled={isSubmitting}
-						/>
+							<span className='authorization__span'></span>
+							<Field
+								id='password'
+								className='authorization__input'
+								name='password'
+								type='password'
+							/>
+							<ErrorMessage
+								className='error'
+								component='div'
+								name='password'
+							/>
+
+							<div className='confirm-btn authorization__confirm'>
+								<input
+									className={
+										isSubmitting
+											? 'submit loading'
+											: 'submit'
+									}
+									type='submit'
+									value='Continue'
+									disabled={isSubmitting}
+								/>
+							</div>
+						</Form>
+					)}
+				</Formik>
+
+				{loginError && (
+					<div className='log-error'>
+						<img src={ErrorIcon} alt='ErrorIcon' />
+						{loginError}
 					</div>
-				</form> */}
+				)}
 
 				<Link to='/registration' className='authorization__sign-up'>
 					Sign up for an account

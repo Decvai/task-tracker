@@ -1,6 +1,6 @@
 import { useAppDispatch } from '../../app/hooks';
 import Avatar from '../../assets/avatar.jpg';
-import { logout } from '../auth/auth.slice';
+import { logout } from '../auth/authSlice';
 
 export const Sidebar = () => {
 	const dispatch = useAppDispatch();
