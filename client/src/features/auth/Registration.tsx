@@ -1,7 +1,7 @@
 import { FC, FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
-import { loginAsync, registrationAsync } from './auth.slice';
+import { loginAsync, registrationAsync } from './authSlice';
 
 export const Registration: FC = () => {
 	const [email, setEmail] = useState('');

@@ -1,6 +1,6 @@
 import { API_URL } from '../../config';
-import { User } from '../../shared/user.type';
-import { RegistrationData } from './auth.slice';
+import { User } from '../../types/userType';
+import { RegistrationData } from './authSlice';
 
 export interface AuthFetchResponse {
 	token: string;

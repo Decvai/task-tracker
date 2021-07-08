@@ -1,3 +1,4 @@
+import { FormikErrors } from 'formik';
 import { getCurrentHours, getToday } from '../helpers';
 
 export interface NewTaskValidateValues {
@@ -8,10 +9,7 @@ export interface NewTaskValidateValues {
 	dateIntervalTo: string;
 	notes: string;
 }
-
-export type NewTaskValidateErrors = {
-	[K in keyof NewTaskValidateValues]: string;
-};
+export type NewTaskValidateErrors = FormikErrors<NewTaskValidateValues>;
 
 export const newTaskValidate = ({
 	name,
@@ -29,8 +27,8 @@ export const newTaskValidate = ({
 	return errors;
 };
 
-type NameErrors = Pick<NewTaskValidateErrors, 'name'>;
 type NameValues = Pick<NewTaskValidateValues, 'name'>;
+type NameErrors = Pick<NewTaskValidateErrors, 'name'>;
 const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	if (!name) {
 		errors.name = 'Required';
@@ -39,11 +37,11 @@ const nameValidate = (errors: NameErrors, { name }: NameValues) => {
 	}
 };
 
-type HoursErrors = Pick<NewTaskValidateErrors, 'hoursFrom' | 'hoursTo'>;
 type HoursValues = Pick<
 	NewTaskValidateValues,
 	'hoursFrom' | 'hoursTo' | 'dateIntervalFrom'
 >;
+type HoursErrors = Pick<NewTaskValidateErrors, 'hoursFrom' | 'hoursTo'>;
 const hoursValidate = (
 	errors: HoursErrors,
 	{ hoursFrom, hoursTo, dateIntervalFrom }: HoursValues
@@ -66,12 +64,12 @@ const hoursValidate = (
 	}
 };
 
-type DateIntervalErrors = Pick<
-	NewTaskValidateErrors,
-	'dateIntervalFrom' | 'dateIntervalTo'
->;
 type DateIntervalValues = Pick<
 	NewTaskValidateValues,
+	'dateIntervalFrom' | 'dateIntervalTo'
+>;
+type DateIntervalErrors = Pick<
+	NewTaskValidateErrors,
 	'dateIntervalFrom' | 'dateIntervalTo'
 >;
 const dateIntervalValidate = (

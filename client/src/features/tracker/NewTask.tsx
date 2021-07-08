@@ -5,7 +5,7 @@ import { getToday } from '../../utils/helpers';
 import {
 	newTaskValidate,
 	NewTaskValidateValues,
-} from '../../utils/validators/new-task.validator';
+} from '../../utils/validators/newTaskValidator';
 
 interface NewTaskProps {
 	active: boolean;
@@ -97,7 +97,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 								type='text'
 							/>
 							<ErrorMessage
-								className='new-task__error'
+								className='error'
 								component='div'
 								name='name'
 							/>
@@ -136,13 +136,13 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 									type='time'
 								/>
 								<ErrorMessage
-									className='new-task__error'
+									className='error'
 									component='div'
 									name='hoursFrom'
 								/>
 								{!errors.hoursFrom && (
 									<ErrorMessage
-										className='new-task__error'
+										className='error'
 										component='div'
 										name='hoursTo'
 									/>
@@ -187,7 +187,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 									min={today}
 								/>
 								<ErrorMessage
-									className='new-task__error'
+									className='error'
 									component='div'
 									name={
 										errors.dateIntervalTo

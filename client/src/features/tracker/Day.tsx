@@ -11,7 +11,7 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import {
 	newTaskValidate,
 	NewTaskValidateValues,
-} from '../../utils/validators/new-task.validator';
+} from '../../utils/validators/newTaskValidator';
 
 interface ParamTypes {
 	readonly id: string;
