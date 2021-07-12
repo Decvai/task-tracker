@@ -15,10 +15,7 @@ export const Login: FC = () => {
 		password: '',
 	};
 
-	const submitHandler = async (
-		credentials: AuthCredentials,
-		{ resetForm }: FormikHelpers<AuthCredentials>
-	) => {
+	const submitHandler = async (credentials: AuthCredentials) => {
 		try {
 			await dispatch(loginAsync(credentials));
 		} catch (err) {
@@ -44,6 +41,7 @@ export const Login: FC = () => {
 								className='authorization__input'
 								name='email'
 								type='text'
+								placeholder='Email'
 							/>
 							<ErrorMessage
 								className='error'
@@ -57,6 +55,7 @@ export const Login: FC = () => {
 								className='authorization__input'
 								name='password'
 								type='password'
+								placeholder='Password'
 							/>
 							<ErrorMessage
 								className='error'

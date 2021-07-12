@@ -9,12 +9,12 @@ import {
 } from './authApi';
 
 export interface AuthState {
-	currentUser: User | {};
+	currentUser: User | null;
 	isAuth: boolean;
 }
 
 const initialState: AuthState = {
-	currentUser: {},
+	currentUser: null,
 	isAuth: false,
 };
 
@@ -106,6 +106,7 @@ export const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 
-export const authSelector = (state: RootState) => state.auth.isAuth;
+export const getIsAuth = (state: RootState) => state.auth.isAuth;
+export const getCurrentUser = (state: RootState) => state.auth.currentUser;
 
 export const authReducer = authSlice.reducer;
