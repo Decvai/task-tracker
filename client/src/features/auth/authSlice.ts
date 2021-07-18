@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { User } from '../../types/userType';
+import { User } from '../../shared/userType';
 import {
 	fetchLogin,
 	AuthFetchResponse,
