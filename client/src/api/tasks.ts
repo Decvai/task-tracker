@@ -14,7 +14,7 @@ export interface TimeInterval {
 }
 
 export interface Task {
-	readonly id: string;
+	_id?: string;
 	name: string;
 	status: IStatus;
 	hours: TimeInterval;
@@ -50,63 +50,63 @@ export const statusList = {
 	},
 };
 
-const tasks: Task[] = [
-	{
-		id: '01',
-		name: 'Important task',
-		status: statusList.stuck,
-		hours: {
-			from: '',
-			to: '',
-		},
-		dateInterval: {
-			from: '31.05.2021',
-			to: '03.06.2021',
-		},
-		notes: '',
-	},
-	{
-		id: '02',
-		name: 'eeef task',
-		status: statusList.working,
-		hours: {
-			from: '4:30 AM',
-			to: '6:30 PM',
-		},
-		dateInterval: {
-			from: '31.05.2021',
-			to: '03.06.2021',
-		},
-		notes: 'Some notes',
-	},
-	{
-		id: '03',
-		name: 'Yes',
-		status: statusList.stuck,
-		hours: {
-			from: '4:30 AM',
-			to: '6:30 AM',
-		},
-		dateInterval: {
-			from: '31.05.2021',
-			to: '03.06.2021',
-		},
-		notes: '',
-	},
-];
+// const tasks: Task[] = [
+// 	{
+// 		id: '01',
+// 		name: 'Important task',
+// 		status: statusList.stuck,
+// 		hours: {
+// 			from: '',
+// 			to: '',
+// 		},
+// 		dateInterval: {
+// 			from: '31.05.2021',
+// 			to: '03.06.2021',
+// 		},
+// 		notes: '',
+// 	},
+// 	{
+// 		id: '02',
+// 		name: 'eeef task',
+// 		status: statusList.working,
+// 		hours: {
+// 			from: '4:30 AM',
+// 			to: '6:30 PM',
+// 		},
+// 		dateInterval: {
+// 			from: '31.05.2021',
+// 			to: '03.06.2021',
+// 		},
+// 		notes: 'Some notes',
+// 	},
+// 	{
+// 		id: '03',
+// 		name: 'Yes',
+// 		status: statusList.stuck,
+// 		hours: {
+// 			from: '4:30 AM',
+// 			to: '6:30 AM',
+// 		},
+// 		dateInterval: {
+// 			from: '31.05.2021',
+// 			to: '03.06.2021',
+// 		},
+// 		notes: '',
+// 	},
+// ];
 
-export const fakeFetch = (): Promise<Task[]> => {
-	return new Promise<Task[]>((r, j) => {
-		setTimeout(() => r(tasks), 1500);
-	});
-};
+// export const fakeFetch = (): Promise<Task[]> => {
+// 	return new Promise<Task[]>((r, j) => {
+// 		setTimeout(() => r(tasks), 1500);
+// 	});
+// };
 
-export const fakePostFetch = (task: Task): Promise<Task> => {
-	return new Promise((r, j) => {
-		setTimeout(() => {
-			tasks.push(task);
+// export const fakePostFetch = (task: Task): Promise<Task> => {
+// 	return new Promise((r, j) => {
+// 		setTimeout(() => {
+// 			tasks.push(task);
 
-			r(task);
-		}, 1500);
-	});
-};
+// 			r(task);
+// 		}, 1500);
+// 	});
+// };

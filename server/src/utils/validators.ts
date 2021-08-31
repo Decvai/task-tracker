@@ -54,11 +54,7 @@ const isValidSelectedDay: CustomValidator = (value: string) => {
 };
 
 export const taskValidator = {
-	getTasks: [
-		query('day', 'Incorrect selected day')
-			.notEmpty()
-			.custom(isValidSelectedDay),
-	],
+	getTasks: [query('day', 'Incorrect selected day').notEmpty()],
 	newTask: [
 		check('task').notEmpty(),
 		check('task.name', 'Incorrect name').isLength({ max: 50 }),
@@ -70,4 +66,5 @@ export const taskValidator = {
 			.notEmpty()
 			.custom(isValidSelectedDay),
 	],
+	deleteTask: [query('id', 'Day id not specified').notEmpty()],
 };

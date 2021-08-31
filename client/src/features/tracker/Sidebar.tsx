@@ -1,6 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import defaultAvatar from '../../assets/avatar.jpg';
 import { getCurrentUser, logout } from '../auth/authSlice';
+import achievementImg from '../../assets/achievement.png';
 
 const BASE_EXP = 1000;
 const FACTOR = 2;
@@ -46,10 +47,7 @@ export const Sidebar = () => {
 			<div className='sidebar__achievements achievements'>
 				<div className='achievements__header'>
 					<div className='achievements__icon'>
-						<img
-							src='https://pics.freeicons.io/uploads/icons/png/19795616721571183081-512.png'
-							alt='achievements icon'
-						/>
+						<img src={achievementImg} alt='achievements icon' />
 					</div>
 					<p>Achievements</p>
 				</div>

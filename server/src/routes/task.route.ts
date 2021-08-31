@@ -17,3 +17,9 @@ taskRouter.post(
 	taskValidator.newTask,
 	taskController.postTask
 );
+taskRouter.delete(
+	'/',
+	authMiddleware,
+	taskValidator.deleteTask,
+	taskController.deleteTask
+);

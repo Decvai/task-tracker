@@ -9,7 +9,7 @@ export const taskController = {
 			if (!errors.isEmpty()) {
 				return res
 					.status(400)
-					.json({ message: 'Incorrect request', errors });
+					.send({ message: 'Incorrect request', ...errors });
 			}
 
 			const day = req.query.day as string;
@@ -31,7 +31,7 @@ export const taskController = {
 			if (!errors.isEmpty()) {
 				return res
 					.status(400)
-					.json({ message: 'Incorrect request', errors });
+					.json({ message: 'Incorrect request', ...errors });
 			}
 
 			const task: ITask = req.body.task;
@@ -47,6 +47,31 @@ export const taskController = {
 			await newTask.save();
 
 			res.json(newTask);
+		} catch (err) {
+			console.log(err);
+			return res.status(500).json({ message: err });
+		}
+	},
+
+	async deleteTask(req: Request, res: Response) {
+		try {
+			const errors = validationResult(req);
+			if (!errors.isEmpty()) {
+				return res
+					.status(400)
+					.json({ message: 'Incorrect request', ...errors });
+			}
+
+			const taskId = req.query.id;
+			const task: ITask | null = await Task.findById(taskId);
+
+			if (!task) {
+				return res.status(404).json({ message: 'Task not found' });
+			}
+
+			await Task.findByIdAndDelete(taskId);
+
+			res.json(task);
 		} catch (err) {
 			console.log(err);
 			return res.status(500).json({ message: err });

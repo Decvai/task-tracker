@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { Dispatch, FC, SetStateAction } from 'react';
-import { fakePostFetch, statusList, Task } from '../../api/tasks';
+import { statusList, Task } from '../../api/tasks';
 import { getToday } from '../../utils/helpers';
 import {
 	newTaskValidate,
@@ -35,9 +35,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 		}: NewTaskValidateValues,
 		{ resetForm }: FormikHelpers<NewTaskValidateValues>
 	) => {
-		const id = new Date().getTime().toLocaleString();
 		const newTask: Task = {
-			id,
 			name,
 			hours: {
 				from: hoursFrom,
@@ -51,18 +49,31 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
 			status: statusList.blank,
 		};
 
-		console.log(newTask);
-
 		//TODO send to server
 
 		try {
-			await fakePostFetch(newTask);
+			await postFetch(newTask);
 		} catch (err) {
-			alert(JSON.stringify(err));
+			alert(JSON.stringify(err, null, 2));
 		}
 
 		resetForm();
 		setActive(false);
+	};
+	const postFetch = async (task: Task) => {
+		// const res = await fetch(`${API_URL}/api/tasks?day=${id}`, {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		Accept: 'application/json',
+		// 		'Content-Type': 'application/json',
+		// 		Authorization: `Bearer: ${localStorage.getItem('token')}`,
+		// 	},
+		// 	body: JSON.stringify({ task }),
+		// });
+		// if (!res.ok) {
+		// 	const error = await res.json();
+		// 	throw error;
+		// }
 	};
 
 	return (
