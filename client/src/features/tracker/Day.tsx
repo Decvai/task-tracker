@@ -12,16 +12,14 @@ import {
 	NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
 import { API_URL } from '../../config';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-interface ParamTypes {
-	readonly id: string;
-}
+type Param = 'id';
 
 export const Day = () => {
-	const { id } = useParams<ParamTypes>();
+	const { id } = useParams<Param>();
 
-	const history = useHistory();
+	const navigate = useNavigate();
 
 	const [tasks, setTasks] = useState<Task[]>([]);
 	const columnsNumber = tasks.length ? Object.keys(tasks[0]).length : 6;
@@ -57,7 +55,7 @@ export const Day = () => {
 
 				alert(JSON.stringify(err, null, 2));
 
-				history.push('/days');
+				navigate('/days');
 			}
 		};
 		getTasks();

@@ -2,9 +2,10 @@ import { FC, useState } from 'react';
 import { useAppDispatch } from '../../app/hooks';
 import { AuthCredentials, loginAsync } from './authSlice';
 import { Link } from 'react-router-dom';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import ErrorIcon from '../../assets/error.png';
 import { loginValidationSchema } from '../../utils/validators/authValidator';
+import { getErrorMessage } from '../../utils/helpers';
 
 export const Login: FC = () => {
 	const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ export const Login: FC = () => {
 		try {
 			await dispatch(loginAsync(credentials));
 		} catch (err) {
-			setLoginError(err);
+      setLoginError(getErrorMessage(err));
 		}
 	};
 

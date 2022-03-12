@@ -1,10 +1,11 @@
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import { FC, FormEvent, useState } from 'react';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { registrationValidationSchema } from '../../utils/validators/authValidator';
 import { loginAsync, registrationAsync } from './authSlice';
 import ErrorIcon from '../../assets/error.png';
+import { getErrorMessage } from '../../utils/helpers';
 
 export interface RegistrationData {
 	email: string;
@@ -41,7 +42,7 @@ export const Registration: FC = () => {
 				)
 			);
 		} catch (err) {
-			setRegistrationError(err);
+			setRegistrationError(getErrorMessage(err));
 		}
 	};
 

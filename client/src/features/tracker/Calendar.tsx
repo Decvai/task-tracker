@@ -2,19 +2,19 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { Clock } from '../../utils/Clock';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useRef, useState } from 'react';
 import { NewTask } from './NewTask';
 
 export const Calendar = () => {
-	const history = useHistory();
+	const navigate = useNavigate();
 	const [newTaskActive, setNewTaskActive] = useState(false);
 
 	const calendarWrapperRef = useRef<HTMLDivElement>(null);
 	const shadowRef = useRef<HTMLDivElement>(null);
 
 	const dateClickHandler = ({ dateStr }: DateClickArg) => {
-		history.push(`/days/${dateStr}`);
+		navigate(`/days/${dateStr}`);
 	};
 
 	const mouseMoveHandler = (event: MouseEvent) => {

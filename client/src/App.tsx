@@ -2,9 +2,8 @@ import { useEffect } from 'react';
 import { Tracker } from './features/tracker/Tracker';
 import {
 	BrowserRouter as Router,
+	Routes,
 	Route,
-	Switch,
-	Redirect,
 } from 'react-router-dom';
 import { Registration } from './features/auth/Registration';
 import { Login } from './features/auth/Login';
@@ -23,15 +22,15 @@ export const App = () => {
 		<Router>
 			<div className='app'>
 				{isAuth ? (
-					<Switch>
-						<Route path='/' component={Tracker} />
-					</Switch>
+					<Routes>
+						<Route path='/' element={<Tracker />} />
+					</Routes>
 				) : (
-					<Switch>
-						<Route path='/registration' component={Registration} />
-						<Route path='/login' component={Login} />
-						<Redirect to='/login' />
-					</Switch>
+					<Routes>
+						<Route path='/registration' element={<Registration />} />
+						<Route path='/login' element={<Login />} />
+						{/* <Redirect to='/login' /> */}
+					</Routes>
 				)}
 			</div>
 		</Router>
