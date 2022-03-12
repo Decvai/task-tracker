@@ -1,53 +1,53 @@
 interface IStatus {
-	readonly id: string;
-	color: string;
-	text: string;
+  readonly id: string;
+  color: string;
+  text: string;
 }
 
 interface StatusList {
-	[P: string]: IStatus;
+  [P: string]: IStatus;
 }
 
 export interface TimeInterval {
-	from: string;
-	to: string;
+  from: string;
+  to: string;
 }
 
 export interface Task {
-	_id?: string;
-	name: string;
-	status: IStatus;
-	hours: TimeInterval;
-	dateInterval: TimeInterval;
-	notes: string;
+  _id?: string;
+  name: string;
+  status: IStatus;
+  hours: TimeInterval;
+  dateInterval: TimeInterval;
+  notes: string;
 }
 
 export interface StatusProps {
-	task: Task;
-	statusList: StatusList;
+  task: Task;
+  statusList: StatusList;
 }
 
 export const statusList = {
-	blank: {
-		id: '00',
-		color: 'rgb(196,196,196)',
-		text: '\u00A0', // \u00A0 - non-breaking space
-	},
-	working: {
-		id: '01',
-		color: 'rgb(233, 187, 62)',
-		text: 'Working on it',
-	},
-	stuck: {
-		id: '02',
-		color: 'rgb(143, 52, 52)',
-		text: 'Stuck',
-	},
-	done: {
-		id: '03',
-		color: 'rgb(62, 165, 93)',
-		text: 'Done',
-	},
+  blank: {
+    id: '00',
+    color: 'rgb(196,196,196)',
+    text: '\u00A0', // \u00A0 - non-breaking space
+  },
+  working: {
+    id: '01',
+    color: 'rgb(233, 187, 62)',
+    text: 'Working on it',
+  },
+  stuck: {
+    id: '02',
+    color: 'rgb(143, 52, 52)',
+    text: 'Stuck',
+  },
+  done: {
+    id: '03',
+    color: 'rgb(62, 165, 93)',
+    text: 'Done',
+  },
 };
 
 // const tasks: Task[] = [

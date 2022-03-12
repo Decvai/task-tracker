@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 
 export const Clock = () => {
-	let time = new Date().toLocaleTimeString();
+  let time = new Date().toLocaleTimeString();
 
-	const [ctime, setCtime] = useState(time);
+  const [ctime, setCtime] = useState(time);
 
-	useEffect(() => {
-		const interval = setInterval(updateTime, 1000);
+  useEffect(() => {
+    const interval = setInterval(updateTime, 1000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	}, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
-	const updateTime = () => {
-		time = new Date().toLocaleTimeString();
-		setCtime(time);
-	};
+  const updateTime = () => {
+    time = new Date().toLocaleTimeString();
+    setCtime(time);
+  };
 
-	return <div className='clock'>{ctime}</div>;
+  return <div className='clock'>{ctime}</div>;
 };

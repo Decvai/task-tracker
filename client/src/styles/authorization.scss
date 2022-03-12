@@ -1,79 +1,79 @@
 .authorization {
-	padding: 30px;
-	display: flex;
-	flex-direction: column;
-	width: 50%;
-	margin: 0 auto;
-	background-color: white;
-	border-radius: 10px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: 0 auto;
+  background-color: white;
+  border-radius: 10px;
 
-	color: black;
+  color: black;
 
-	&__header {
-		font-size: 1.5em;
-		font-weight: 500;
-		text-align: center;
-		padding: 0px 0px 5px 0px;
-	}
+  &__header {
+    font-size: 1.5em;
+    font-weight: 500;
+    text-align: center;
+    padding: 0px 0px 5px 0px;
+  }
 
-	&__form {
-		display: flex;
-		position: relative;
-		flex-direction: column;
-		> * {
-			margin: 0px 0px 2% 0px;
-		}
-	}
+  &__form {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    > * {
+      margin: 0px 0px 2% 0px;
+    }
+  }
 
-	&__input {
-		color: #444;
-		font-size: 1.5em;
-		outline: none; // Chrome outline
-		box-shadow: none; // Firefox outline
-		border-radius: 0; // mobile Safari
-		border: solid 1px;
-		border-top: none;
-		border-color: #bbb;
-		background: transparent;
-		display: block;
-		height: 2em;
-		padding: 0 3%;
+  &__input {
+    color: #444;
+    font-size: 1.5em;
+    outline: none; // Chrome outline
+    box-shadow: none; // Firefox outline
+    border-radius: 0; // mobile Safari
+    border: solid 1px;
+    border-top: none;
+    border-color: #bbb;
+    background: transparent;
+    display: block;
+    height: 2em;
+    padding: 0 3%;
 
-		transition: border 0.25s;
+    transition: border 0.25s;
 
-		&:focus {
-			color: #111;
-			border-color: #444;
-			transform: scale(1.01);
+    &:focus {
+      color: #111;
+      border-color: #444;
+      transform: scale(1.01);
 
-			.span {
-				&:focus {
-					transform: scale(1.01);
-				}
-			}
-		}
-	}
+      .span {
+        &:focus {
+          transform: scale(1.01);
+        }
+      }
+    }
+  }
 
-	&__span {
-		position: relative;
-		z-index: 1;
+  &__span {
+    position: relative;
+    z-index: 1;
 
-		&::before,
-		&:after {
-			content: '';
-			position: absolute;
-			display: block;
-			width: 0.8em;
-			height: 3em;
-			top: 0;
-			background: #fff;
-		}
+    &::before,
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0.8em;
+      height: 3em;
+      top: 0;
+      background: #fff;
+    }
 
-		&::before {
-			left: -0.5em;
-		}
-		&::after {
-			right: -0.5em;
-		}
-	}
+    &::before {
+      left: -0.5em;
+    }
+    &::after {
+      right: -0.5em;
+    }
+  }
 }

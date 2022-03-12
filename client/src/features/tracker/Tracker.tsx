@@ -4,16 +4,16 @@ import { Route, Routes } from 'react-router-dom';
 import { Day } from './Day';
 
 export const Tracker = () => {
-	return (
-		<div className='tracker'>
-			<Sidebar />
+  return (
+    <div className='tracker'>
+      <Sidebar />
 
-			<Routes>
-				<Route path='/' element={<Calendar />} />
-				<Route path='/days/:id' element={<Day />} />
+      <Routes>
+        <Route path='/' element={<Calendar />} />
+        <Route path='/days/:id' element={<Day />} />
 
-				{/* <Redirect to='/' /> */}
-			</Routes>
-		</div>
-	);
+        {/* <Redirect to='/' /> */}
+      </Routes>
+    </div>
+  );
 };

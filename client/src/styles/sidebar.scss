@@ -1,120 +1,120 @@
 .sidebar {
-	display: flex;
-	align-items: center;
-	flex-basis: 15%;
-	flex-direction: column;
-	position: relative;
+  display: flex;
+  align-items: center;
+  flex-basis: 15%;
+  flex-direction: column;
+  position: relative;
 
-	border-right: 2px solid rgba(204, 204, 204, 0.596);
+  border-right: 2px solid rgba(204, 204, 204, 0.596);
 
-	min-height: 100vh;
-	padding: 10px;
+  min-height: 100vh;
+  padding: 10px;
 
-	text-align: center;
-	font-weight: 300;
-	font-size: 0.8rem;
-	flex-shrink: 0;
+  text-align: center;
+  font-weight: 300;
+  font-size: 0.8rem;
+  flex-shrink: 0;
 
-	background-image: linear-gradient(315deg, #7a7676 0%, #576574 74%);
+  background-image: linear-gradient(315deg, #7a7676 0%, #576574 74%);
 
-	& > *:not(:last-child) {
-		margin: 0px 0px 10px 0px;
-	}
+  & > *:not(:last-child) {
+    margin: 0px 0px 10px 0px;
+  }
 
-	&__profile {
-		border-bottom: 1px solid #fff;
-		padding-bottom: 15px;
+  &__profile {
+    border-bottom: 1px solid #fff;
+    padding-bottom: 15px;
 
-		&-nickname {
-			font-weight: 700;
-			font-size: 1.2rem;
-		}
+    &-nickname {
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
 
-		&-lvl {
-			margin: 0px 0px 10px 0px;
-			font-style: italic;
-		}
-	}
+    &-lvl {
+      margin: 0px 0px 10px 0px;
+      font-style: italic;
+    }
+  }
 
-	&__profile-icon {
-		width: 7rem;
-		height: 6rem;
-		margin: 0px 0px 5px 0px;
+  &__profile-icon {
+    width: 7rem;
+    height: 6rem;
+    margin: 0px 0px 5px 0px;
 
-		img {
-			border: 1px solid #ccc;
-			object-fit: cover;
+    img {
+      border: 1px solid #ccc;
+      object-fit: cover;
 
-			width: 100%;
-			height: 100%;
+      width: 100%;
+      height: 100%;
 
-			border-radius: 10%;
-		}
-	}
+      border-radius: 10%;
+    }
+  }
 
-	&__status-bar {
-		&-percent {
-			font-style: italic;
-		}
+  &__status-bar {
+    &-percent {
+      font-style: italic;
+    }
 
-		&-scale {
-			border-bottom: 1px solid rgb(132, 173, 132);
-			width: 60%;
-			margin: 0 auto;
+    &-scale {
+      border-bottom: 1px solid rgb(132, 173, 132);
+      width: 60%;
+      margin: 0 auto;
 
-			position: relative;
+      position: relative;
 
-			&::after {
-				content: '';
+      &::after {
+        content: '';
 
-				position: absolute;
-				width: var(--exp-percent);
-				height: 1px;
-				top: 0;
-				left: 0;
-				background-color: rgb(57, 238, 21);
-			}
-		}
-	}
+        position: absolute;
+        width: var(--exp-percent);
+        height: 1px;
+        top: 0;
+        left: 0;
+        background-color: rgb(57, 238, 21);
+      }
+    }
+  }
 
-	&__logout {
-		padding: 5px;
-		background-color: transparent;
-		border: none;
-		color: #fff;
-		font-size: 1rem;
-		cursor: pointer;
-		border-top: 1px solid #fff;
-	}
+  &__logout {
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    border-top: 1px solid #fff;
+  }
 
-	@media (max-width: 500px) {
-		display: none;
-	}
+  @media (max-width: 500px) {
+    display: none;
+  }
 }
 
 .achievements {
-	display: flex;
-	align-items: flex-start;
-	justify-content: center;
-	font-weight: 500;
-	font-size: 1rem;
-	flex-grow: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-weight: 500;
+  font-size: 1rem;
+  flex-grow: 1;
 
-	&__header {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		flex-wrap: wrap;
-	}
+  &__header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
 
-	&__icon {
-		width: 100%;
-		max-width: 2rem;
-		max-height: 2rem;
+  &__icon {
+    width: 100%;
+    max-width: 2rem;
+    max-height: 2rem;
 
-		img {
-			width: 100%;
-			height: 100%;
-		}
-	}
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
 }

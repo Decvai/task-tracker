@@ -3,64 +3,64 @@ import { User } from '../../shared/userType';
 import { RegistrationData } from './authSlice';
 
 export interface AuthFetchResponse {
-	token: string;
-	user: User;
+  token: string;
+  user: User;
 }
 
 export const fetchLogin = async (
-	email: string,
-	password: string
+  email: string,
+  password: string
 ): Promise<AuthFetchResponse> => {
-	const response = await fetch(`${API_URL}/api/auth/login`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify({
-			email,
-			password,
-		}),
-	});
+  const response = await fetch(`${API_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+      password,
+    }),
+  });
 
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
 
-	const data: AuthFetchResponse = await response.json();
+  const data: AuthFetchResponse = await response.json();
 
-	return data;
+  return data;
 };
 
 export const fetchAuth = async (): Promise<AuthFetchResponse> => {
-	const response = await fetch(`${API_URL}/api/auth/authorization`, {
-		headers: {
-			Authorization: `Bearer: ${localStorage.getItem('token')}`,
-		},
-	});
+  const response = await fetch(`${API_URL}/api/auth/authorization`, {
+    headers: {
+      Authorization: `Bearer: ${localStorage.getItem('token')}`,
+    },
+  });
 
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
 
-	const data: AuthFetchResponse = await response.json();
+  const data: AuthFetchResponse = await response.json();
 
-	return data;
+  return data;
 };
 
 export const fetchRegistration = async (
-	userInfo: RegistrationData
+  userInfo: RegistrationData
 ): Promise<boolean> => {
-	const response = await fetch(`${API_URL}/api/auth/registration`, {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-		},
-		body: JSON.stringify(userInfo),
-	});
+  const response = await fetch(`${API_URL}/api/auth/registration`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(userInfo),
+  });
 
-	if (!response.ok) {
-		throw new Error(response.statusText);
-	}
+  if (!response.ok) {
+    throw new Error(response.statusText);
+  }
 
-	return true;
+  return true;
 };
