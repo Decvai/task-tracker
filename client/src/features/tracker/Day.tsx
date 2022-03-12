@@ -1,18 +1,17 @@
-import { Link, useParams } from 'react-router-dom';
-import { Status } from './Status';
-import GoBack from '../../assets/go-back.png';
+import { Link, useParams , useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import GoBack from '../../assets/go-back.png';
 import { Loader } from '../../utils/Loader/Loader';
 import { Task, statusList } from '../../api/tasks';
 import { getToday } from '../../utils/helpers';
 import ErrorIcon from '../../assets/error.png';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import {
   newTaskValidate,
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
 import { API_URL } from '../../config';
-import { useNavigate } from 'react-router-dom';
+import { Status } from './Status';
 
 type Param = 'id';
 

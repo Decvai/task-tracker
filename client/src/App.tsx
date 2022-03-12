@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { Tracker } from './features/tracker/Tracker';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Tracker } from './features/tracker/Tracker';
 import { Registration } from './features/auth/Registration';
 import { Login } from './features/auth/Login';
 import { useAppDispatch, useAppSelector } from './app/hooks';

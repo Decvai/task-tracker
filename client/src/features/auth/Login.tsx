@@ -1,11 +1,11 @@
 import { FC, useState } from 'react';
-import { useAppDispatch } from '../../app/hooks';
-import { AuthCredentials, loginAsync } from './authSlice';
 import { Link } from 'react-router-dom';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { useAppDispatch } from '../../app/hooks';
 import ErrorIcon from '../../assets/error.png';
 import { loginValidationSchema } from '../../utils/validators/authValidator';
 import { getErrorMessage } from '../../utils/helpers';
+import { AuthCredentials, loginAsync } from './authSlice';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();

@@ -1,9 +1,9 @@
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import { Clock } from '../../utils/Clock';
 import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useRef, useState } from 'react';
+import { Clock } from '../../utils/Clock';
 import { NewTask } from './NewTask';
 
 export const Calendar = () => {

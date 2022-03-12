@@ -3,9 +3,9 @@ import { FC, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { registrationValidationSchema } from '../../utils/validators/authValidator';
-import { loginAsync, registrationAsync } from './authSlice';
 import ErrorIcon from '../../assets/error.png';
 import { getErrorMessage } from '../../utils/helpers';
+import { loginAsync, registrationAsync } from './authSlice';
 
 export interface RegistrationData {
   email: string;

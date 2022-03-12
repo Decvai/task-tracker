@@ -1,6 +1,6 @@
+import { Route, Routes } from 'react-router-dom';
 import { Sidebar } from './Sidebar';
 import { Calendar } from './Calendar';
-import { Route, Routes } from 'react-router-dom';
 import { Day } from './Day';
 
 export const Tracker = () => {
