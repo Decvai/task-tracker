@@ -167,7 +167,7 @@ export const Day = () => {
     <div className='day'>
       <div className='day__header'>
         <div className='day__go-back'>
-          <Link to='/calendar'>
+          <Link to='/'>
             <img src={GoBack} alt='' />
             Back to calendar
           </Link>

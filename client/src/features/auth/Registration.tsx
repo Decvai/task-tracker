@@ -119,7 +119,7 @@ export const Registration: FC = () => {
           </div>
         )}
 
-        <Link to='/login' className='authorization__login'>
+        <Link to='/' className='authorization__login'>
           Already have an account? Log in
         </Link>
       </div>
