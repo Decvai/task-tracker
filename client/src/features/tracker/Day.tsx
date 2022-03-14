@@ -1,4 +1,4 @@
-import { Link, useParams , useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import GoBack from '../../assets/go-back.png';
@@ -13,10 +13,10 @@ import {
 import { API_URL } from '../../config';
 import { Status } from './Status';
 
-type Param = 'id';
+type Param = 'dayId';
 
 export const Day = () => {
-  const { id } = useParams<Param>();
+  const { dayId } = useParams<Param>();
 
   const navigate = useNavigate();
 
@@ -64,7 +64,7 @@ export const Day = () => {
     };
   }, []);
   const fetchTasks = async () => {
-    const res = await fetch(`${API_URL}/api/tasks?day=${id}`, {
+    const res = await fetch(`${API_URL}/api/tasks?day=${dayId}`, {
       headers: {
         Authorization: `Bearer: ${localStorage.getItem('token')}`,
       },
@@ -140,7 +140,7 @@ export const Day = () => {
     }
   };
   const postFetch = async (task: Task) => {
-    const response = await fetch(`${API_URL}/api/tasks?day=${id}`, {
+    const response = await fetch(`${API_URL}/api/tasks?day=${dayId}`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -173,7 +173,7 @@ export const Day = () => {
           </Link>
         </div>
 
-        <div className='day__selected-day'>{id}</div>
+        <div className='day__selected-day'>{dayId}</div>
       </div>
 
       <div className='day__body'>

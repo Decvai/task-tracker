@@ -44,7 +44,7 @@ export const App = () => {
           <Routes>
             <Route path='/' element={<Tracker />}>
               <Route index element={<Calendar />} />
-              <Route path='days/:id' element={<Day />} />
+              <Route path='days/:dayId' element={<Day />} />
               <Route path='*' element={<Page404 />} />
             </Route>
           </Routes>

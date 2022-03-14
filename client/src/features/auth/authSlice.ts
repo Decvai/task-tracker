@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { User } from '../../shared/userType';
+import { getErrorMessage } from '../../utils/helpers';
 import {
   fetchLogin,
-  AuthFetchResponse,
   fetchAuth,
   fetchRegistration,
+  AuthFetchResponse,
+  AuthCredentials,
+  RegistrationData,
 } from './authApi';
 
 export interface AuthState {
@@ -18,11 +21,6 @@ const initialState: AuthState = {
   isAuth: false,
 };
 
-export interface AuthCredentials {
-  email: string;
-  password: string;
-}
-
 export const loginAsync = createAsyncThunk<AuthFetchResponse, AuthCredentials>(
   'auth/login',
   async ({ email, password }, { rejectWithValue }) => {
@@ -30,31 +28,32 @@ export const loginAsync = createAsyncThunk<AuthFetchResponse, AuthCredentials>(
       const response: AuthFetchResponse = await fetchLogin(email, password);
       return response;
     } catch (err) {
-      if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      }
-
-      throw rejectWithValue('Unexpected error');
+      return rejectWithValue(getErrorMessage(err));
     }
   }
 );
 
-export const authAsync = createAsyncThunk<AuthFetchResponse>(
+export const authAsync = createAsyncThunk<AuthFetchResponse, void>(
   'auth/authorization',
-  async () => {
-    const response: AuthFetchResponse = await fetchAuth();
-    return response;
+  async (_, { rejectWithValue }) => {
+    try {
+      const response: AuthFetchResponse = await fetchAuth();
+      return response;
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err));
+    }
   }
 );
-
-export type RegistrationData = AuthCredentials & { nickname: string };
 
 export const registrationAsync = createAsyncThunk<boolean, RegistrationData>(
   'auth/registration',
   async (user, { rejectWithValue }) => {
-    const isAdded: boolean = await fetchRegistration(user);
-
-    return isAdded;
+    try {
+      const isAdded: boolean = await fetchRegistration(user);
+      return isAdded;
+    } catch (err) {
+      return rejectWithValue(getErrorMessage(err));
+    }
   }
 );
 
@@ -62,13 +61,13 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    logout: (state) => {
+    logout(state) {
       state.currentUser = initialState.currentUser;
       state.isAuth = initialState.isAuth;
       localStorage.removeItem('token');
     },
   },
-  extraReducers: (builder) => {
+  extraReducers(builder) {
     builder
       .addCase(loginAsync.fulfilled, (state, action) => {
         const { user, token } = action.payload;
@@ -88,15 +87,17 @@ export const authSlice = createSlice({
         state.isAuth = true;
         localStorage.setItem('token', token);
       })
-      .addCase(authAsync.rejected, () => {
+      .addCase(authAsync.rejected, (_, action) => {
         localStorage.removeItem('token');
+        throw action.payload;
       })
+
       .addCase(registrationAsync.fulfilled, (_, action) => {
         const isAdded: boolean = action.payload;
-
-        if (isAdded) {
-          console.log('added');
-        }
+        // TODO: add logic
+      })
+      .addCase(registrationAsync.rejected, (_, action) => {
+        throw action.payload;
       });
   },
 });

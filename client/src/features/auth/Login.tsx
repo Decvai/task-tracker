@@ -5,7 +5,8 @@ import { useAppDispatch } from '../../app/hooks';
 import ErrorIcon from '../../assets/error.png';
 import { loginValidationSchema } from '../../utils/validators/authValidator';
 import { getErrorMessage } from '../../utils/helpers';
-import { AuthCredentials, loginAsync } from './authSlice';
+import { loginAsync } from './authSlice';
+import { AuthCredentials } from './authApi';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();

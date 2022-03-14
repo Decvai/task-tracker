@@ -1,11 +1,17 @@
 import { API_URL } from '../../config';
 import { User } from '../../shared/userType';
-import { RegistrationData } from './authSlice';
 
 export interface AuthFetchResponse {
   token: string;
   user: User;
 }
+
+export interface AuthCredentials {
+  email: string;
+  password: string;
+}
+
+export type RegistrationData = AuthCredentials & { nickname: string };
 
 export const fetchLogin = async (
   email: string,
@@ -27,7 +33,6 @@ export const fetchLogin = async (
   }
 
   const data: AuthFetchResponse = await response.json();
-
   return data;
 };
 
@@ -43,7 +48,6 @@ export const fetchAuth = async (): Promise<AuthFetchResponse> => {
   }
 
   const data: AuthFetchResponse = await response.json();
-
   return data;
 };
 
