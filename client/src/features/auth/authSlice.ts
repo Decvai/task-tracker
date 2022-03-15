@@ -15,34 +15,42 @@ export interface AuthState {
   currentUser: User | null;
   isAuth: boolean;
   token: string;
+  loading: boolean;
+  error: string;
 }
 
 const initialState: AuthState = {
   currentUser: null,
   isAuth: false,
-  token: ''
+  token: '',
+  loading: true,
+  error: '',
 };
 
-export const loginAsync = createAsyncThunk<AuthFetchResponse, AuthCredentials>(
-  'auth/login',
-  async ({ email, password }, { rejectWithValue }) => {
-    try {
-      const response: AuthFetchResponse = await fetchLogin(email, password);
-      return response;
-    } catch (err) {
-      return rejectWithValue(getErrorMessage(err));
-    }
+export const login = createAsyncThunk<
+  AuthFetchResponse,
+  AuthCredentials,
+  { rejectValue: string }
+>('auth/login', async ({ email, password }, { rejectWithValue }) => {
+  try {
+    const response: AuthFetchResponse = await fetchLogin(email, password);
+    return response;
+  } catch (err) {
+    return rejectWithValue(getErrorMessage(err));
   }
-);
+});
 
-export const authAsync = createAsyncThunk<
+export const auth = createAsyncThunk<
   AuthFetchResponse,
   void,
-  { state: RootState }
+  { state: RootState; rejectValue: string }
 >('auth/authorization', async (_, { rejectWithValue, getState }) => {
   try {
     const state = getState();
     const token = state.auth.token;
+    if (!token) {
+      throw new Error('No token');
+    }
 
     const response: AuthFetchResponse = await fetchAuth(token);
     return response;
@@ -51,17 +59,18 @@ export const authAsync = createAsyncThunk<
   }
 });
 
-export const registrationAsync = createAsyncThunk<boolean, RegistrationData>(
-  'auth/registration',
-  async (user, { rejectWithValue }) => {
-    try {
-      const isAdded: boolean = await fetchRegistration(user);
-      return isAdded;
-    } catch (err) {
-      return rejectWithValue(getErrorMessage(err));
-    }
+export const registration = createAsyncThunk<
+  boolean,
+  RegistrationData,
+  { rejectValue: string }
+>('auth/registration', async (user, { rejectWithValue }) => {
+  try {
+    const isAdded: boolean = await fetchRegistration(user);
+    return isAdded;
+  } catch (err) {
+    return rejectWithValue(getErrorMessage(err));
   }
-);
+});
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -75,35 +84,53 @@ export const authSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(loginAsync.fulfilled, (state, action) => {
+      .addCase(auth.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(auth.fulfilled, (state, action) => {
         const { user, token } = action.payload;
 
         state.currentUser = user;
         state.isAuth = true;
         state.token = token;
+        state.loading = false;
       })
-      .addCase(loginAsync.rejected, (_, action) => {
-        throw action.payload;
-      })
-
-      .addCase(authAsync.fulfilled, (state, action) => {
-        const { user, token } = action.payload;
-
-        state.currentUser = user;
-        state.isAuth = true;
-        state.token = token;
-      })
-      .addCase(authAsync.rejected, (state, action) => {
+      .addCase(auth.rejected, (state, action) => {
         state.token = initialState.token;
-        throw action.payload;
+        state.loading = false;
+
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = String(action.error.message);
+        }
       })
 
-      .addCase(registrationAsync.fulfilled, (_, action) => {
+      .addCase(login.fulfilled, (state, action) => {
+        const { user, token } = action.payload;
+
+        state.currentUser = user;
+        state.isAuth = true;
+        state.token = token;
+      })
+      .addCase(login.rejected, (state, action) => {
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = String(action.error.message);
+        }
+      })
+
+      .addCase(registration.fulfilled, (_, action) => {
         const isAdded: boolean = action.payload;
         // TODO: add logic
       })
-      .addCase(registrationAsync.rejected, (_, action) => {
-        throw action.payload;
+      .addCase(registration.rejected, (state, action) => {
+        if (action.payload) {
+          state.error = action.payload;
+        } else {
+          state.error = String(action.error.message);
+        }
       });
   },
 });
@@ -113,5 +140,7 @@ export const { logout } = authSlice.actions;
 export const getIsAuth = (state: RootState) => state.auth.isAuth;
 export const getCurrentUser = (state: RootState) => state.auth.currentUser;
 export const getToken = (state: RootState) => state.auth.token;
+export const getLoading = (state: RootState) => state.auth.loading;
+export const getError = (state: RootState) => state.auth.error;
 
 export const authReducer = authSlice.reducer;

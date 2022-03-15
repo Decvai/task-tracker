@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { authAsync, getIsAuth } from './features/auth/authSlice';
+import { auth, getIsAuth, getLoading } from './features/auth/authSlice';
 import { Login } from './features/auth/Login';
 import { Registration } from './features/auth/Registration';
 import { Calendar } from './features/tracker/Calendar';
 import { Day } from './features/tracker/Day';
 import { Tracker } from './features/tracker/Tracker';
+import { LoadingPage } from './utils/LoadingPage/LoadingPage';
 
 // TODO: move to a different file
 const Page404 = () => (
@@ -31,11 +32,19 @@ const Page404 = () => (
 
 export const App = () => {
   const isAuth = useAppSelector(getIsAuth);
+  const isLoading = useAppSelector(getLoading);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(authAsync());
+    dispatch(auth());
   }, []);
+
+  if (isLoading) {
+    return (
+      <LoadingPage />
+    )
+  }
 
   return (
     <Router>

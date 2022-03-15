@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../app/hooks';
 import ErrorIcon from '../../assets/error.png';
 import { loginValidationSchema } from '../../utils/validators/authValidator';
 import { getErrorMessage } from '../../utils/helpers';
-import { loginAsync } from './authSlice';
+import { login } from './authSlice';
 import { AuthCredentials } from './authApi';
 
 export const Login: FC = () => {
@@ -19,7 +19,7 @@ export const Login: FC = () => {
 
   const submitHandler = async (credentials: AuthCredentials) => {
     try {
-      await dispatch(loginAsync(credentials));
+      await dispatch(login(credentials));
     } catch (err) {
       setLoginError(getErrorMessage(err));
     }

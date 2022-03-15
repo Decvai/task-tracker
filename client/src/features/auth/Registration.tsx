@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../app/hooks';
 import { registrationValidationSchema } from '../../utils/validators/authValidator';
 import ErrorIcon from '../../assets/error.png';
 import { getErrorMessage } from '../../utils/helpers';
-import { loginAsync, registrationAsync } from './authSlice';
+import { login, registration } from './authSlice';
 
 export interface RegistrationData {
   email: string;
@@ -31,10 +31,10 @@ export const Registration: FC = () => {
     password,
   }: RegistrationData) => {
     try {
-      await dispatch(registrationAsync({ email, nickname, password })).then(
+      await dispatch(registration({ email, nickname, password })).then(
         () =>
           dispatch(
-            loginAsync({
+            login({
               email,
               password,
             })
