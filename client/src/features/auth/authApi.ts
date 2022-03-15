@@ -1,5 +1,5 @@
 import { API_URL } from '../../config';
-import { User } from '../../shared/userType';
+import { User } from '../../models/User';
 
 export interface AuthFetchResponse {
   token: string;

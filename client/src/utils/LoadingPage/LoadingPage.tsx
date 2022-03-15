@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import { Loader } from '../Loader/Loader';
 
-export const LoadingPage = () => (
+export const LoadingPage: FC = () => (
   <div
     style={{
       height: '100vh',

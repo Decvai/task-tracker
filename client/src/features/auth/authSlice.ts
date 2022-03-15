@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { User } from '../../shared/userType';
+import { User } from '../../models/User';
 import { getErrorMessage } from '../../utils/helpers';
 import {
   fetchLogin,

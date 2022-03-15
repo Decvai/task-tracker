@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { auth, getIsAuth, getLoading } from './features/auth/authSlice';
 import { Login } from './features/auth/Login';
@@ -8,27 +8,7 @@ import { Calendar } from './features/tracker/Calendar';
 import { Day } from './features/tracker/Day';
 import { Tracker } from './features/tracker/Tracker';
 import { LoadingPage } from './utils/LoadingPage/LoadingPage';
-
-// TODO: move to a different file
-const Page404 = () => (
-  <main
-    style={{
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      flexDirection: 'column',
-      gap: '8px',
-      height: '100%',
-      width: '100%',
-      fontSize: '24px',
-    }}
-  >
-    <p>There&apos;s nothing here!</p>
-    <Link to='/' style={{ color: 'white', fontSize: '16px' }}>
-      Go back to main page
-    </Link>
-  </main>
-);
+import { Page404 } from './utils/Page404/Page404';
 
 export const App = () => {
   const isAuth = useAppSelector(getIsAuth);
