@@ -11,12 +11,16 @@ import {
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
 import { API_URL } from '../../config';
+import { useAppSelector } from '../../app/hooks';
+import { getToken } from '../auth/authSlice';
 import { Status } from './Status';
 
 type Param = 'dayId';
 
 export const Day = () => {
   const { dayId } = useParams<Param>();
+
+  const token = useAppSelector(getToken)
 
   const navigate = useNavigate();
 
@@ -66,7 +70,7 @@ export const Day = () => {
   const fetchTasks = async () => {
     const res = await fetch(`${API_URL}/api/tasks?day=${dayId}`, {
       headers: {
-        Authorization: `Bearer: ${localStorage.getItem('token')}`,
+        Authorization: `Bearer: ${token}`,
       },
     });
 
@@ -92,7 +96,7 @@ export const Day = () => {
     const response = await fetch(`${API_URL}/api/tasks?id=${id}`, {
       method: 'DELETE',
       headers: {
-        Authorization: `Bearer: ${localStorage.getItem('token')}`,
+        Authorization: `Bearer: ${token}`,
       },
     });
 
@@ -145,7 +149,7 @@ export const Day = () => {
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        Authorization: `Bearer: ${localStorage.getItem('token')}`,
+        Authorization: `Bearer: ${token}`,
       },
       body: JSON.stringify({ task }),
     });

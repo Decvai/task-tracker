@@ -14,11 +14,13 @@ import {
 export interface AuthState {
   currentUser: User | null;
   isAuth: boolean;
+  token: string;
 }
 
 const initialState: AuthState = {
   currentUser: null,
   isAuth: false,
+  token: ''
 };
 
 export const loginAsync = createAsyncThunk<AuthFetchResponse, AuthCredentials>(
@@ -33,17 +35,21 @@ export const loginAsync = createAsyncThunk<AuthFetchResponse, AuthCredentials>(
   }
 );
 
-export const authAsync = createAsyncThunk<AuthFetchResponse, void>(
-  'auth/authorization',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response: AuthFetchResponse = await fetchAuth();
-      return response;
-    } catch (err) {
-      return rejectWithValue(getErrorMessage(err));
-    }
+export const authAsync = createAsyncThunk<
+  AuthFetchResponse,
+  void,
+  { state: RootState }
+>('auth/authorization', async (_, { rejectWithValue, getState }) => {
+  try {
+    const state = getState();
+    const token = state.auth.token;
+
+    const response: AuthFetchResponse = await fetchAuth(token);
+    return response;
+  } catch (err) {
+    return rejectWithValue(getErrorMessage(err));
   }
-);
+});
 
 export const registrationAsync = createAsyncThunk<boolean, RegistrationData>(
   'auth/registration',
@@ -64,7 +70,7 @@ export const authSlice = createSlice({
     logout(state) {
       state.currentUser = initialState.currentUser;
       state.isAuth = initialState.isAuth;
-      localStorage.removeItem('token');
+      state.token = initialState.token;
     },
   },
   extraReducers(builder) {
@@ -74,7 +80,7 @@ export const authSlice = createSlice({
 
         state.currentUser = user;
         state.isAuth = true;
-        localStorage.setItem('token', token);
+        state.token = token;
       })
       .addCase(loginAsync.rejected, (_, action) => {
         throw action.payload;
@@ -85,10 +91,10 @@ export const authSlice = createSlice({
 
         state.currentUser = user;
         state.isAuth = true;
-        localStorage.setItem('token', token);
+        state.token = token;
       })
-      .addCase(authAsync.rejected, (_, action) => {
-        localStorage.removeItem('token');
+      .addCase(authAsync.rejected, (state, action) => {
+        state.token = initialState.token;
         throw action.payload;
       })
 
@@ -106,5 +112,6 @@ export const { logout } = authSlice.actions;
 
 export const getIsAuth = (state: RootState) => state.auth.isAuth;
 export const getCurrentUser = (state: RootState) => state.auth.currentUser;
+export const getToken = (state: RootState) => state.auth.token;
 
 export const authReducer = authSlice.reducer;

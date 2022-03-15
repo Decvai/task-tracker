@@ -9,7 +9,9 @@ const FACTOR = 2;
 export const Sidebar = () => {
   const dispatch = useAppDispatch();
 
-  const currentUser = useAppSelector(getCurrentUser)!;
+  const currentUser = useAppSelector(getCurrentUser);
+  if(!currentUser) return null;
+
   const avatar = currentUser.avatar || defaultAvatar;
 
   const userLvl = Math.floor(Math.pow(currentUser.exp / BASE_EXP, FACTOR)) + 1;

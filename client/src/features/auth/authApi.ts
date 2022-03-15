@@ -36,10 +36,10 @@ export const fetchLogin = async (
   return data;
 };
 
-export const fetchAuth = async (): Promise<AuthFetchResponse> => {
+export const fetchAuth = async (token: string): Promise<AuthFetchResponse> => {
   const response = await fetch(`${API_URL}/api/auth/authorization`, {
     headers: {
-      Authorization: `Bearer: ${localStorage.getItem('token')}`,
+      Authorization: `Bearer: ${token}`,
     },
   });
 
