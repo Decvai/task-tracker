@@ -1,17 +1,17 @@
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
-import GoBack from '../../assets/go-back.png';
-import { Loader } from '../../utils/Loader/Loader';
-import { Task, statusList } from '../../api/tasks';
-import { getToday } from '../../utils/helpers';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { statusList, Task } from '../../api/tasks';
+import { useAppSelector } from '../../app/hooks';
 import ErrorIcon from '../../assets/error.png';
+import GoBack from '../../assets/go-back.png';
+import { API_URL } from '../../config';
+import { getToday } from '../../utils/helpers';
+import { LoadingPage } from '../../utils/LoadingPage/LoadingPage';
 import {
   newTaskValidate,
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
-import { API_URL } from '../../config';
-import { useAppSelector } from '../../app/hooks';
 import { getToken } from '../auth/authSlice';
 import { Status } from './Status';
 
@@ -20,7 +20,7 @@ type Param = 'dayId';
 export const Day = () => {
   const { dayId } = useParams<Param>();
 
-  const token = useAppSelector(getToken)
+  const token = useAppSelector(getToken);
 
   const navigate = useNavigate();
 
@@ -164,7 +164,7 @@ export const Day = () => {
   };
 
   if (isLoading) {
-    return <Loader />;
+    return <LoadingPage />;
   }
 
   return (
