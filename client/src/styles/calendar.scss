@@ -73,6 +73,7 @@
 
     .fc-daygrid-day-number {
       padding: 1rem;
+      z-index: 15;
     }
 
     .fc-scroller::-webkit-scrollbar {
@@ -186,6 +187,7 @@
     height: 200vh;
 
     transform: translateX(-50%) translateY(-50%);
+    pointer-events: none;
 
     background: radial-gradient(
       circle at center,
