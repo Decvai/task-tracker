@@ -22,10 +22,6 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-setTimeout(() => {
-  persistor.persist();
-}, 500);
-
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppThunk<ReturnType = void> = ThunkAction<
