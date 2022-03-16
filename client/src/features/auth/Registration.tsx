@@ -1,6 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../app/hooks';
 import { registrationValidationSchema } from '../../utils/validators/authValidator';
 import ErrorIcon from '../../assets/error.png';
@@ -15,6 +15,8 @@ export interface RegistrationData {
 }
 
 export const Registration: FC = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
   const [registrationError, setRegistrationError] = useState<string>('');
 
@@ -31,15 +33,14 @@ export const Registration: FC = () => {
     password,
   }: RegistrationData) => {
     try {
-      await dispatch(registration({ email, nickname, password })).then(
-        () =>
-          dispatch(
-            login({
-              email,
-              password,
-            })
-          )
+      await dispatch(registration({ email, nickname, password }));
+      await dispatch(
+        login({
+          email,
+          password,
+        })
       );
+      navigate('/');
     } catch (err) {
       setRegistrationError(getErrorMessage(err));
     }
