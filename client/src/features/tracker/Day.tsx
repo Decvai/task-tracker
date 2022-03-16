@@ -12,7 +12,7 @@ import {
   newTaskValidate,
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
-import { getToken } from '../auth/authSlice';
+import { selectToken } from '../auth/authSlice';
 import { Status } from './Status';
 
 type Param = 'dayId';
@@ -20,7 +20,7 @@ type Param = 'dayId';
 export const Day = () => {
   const { dayId } = useParams<Param>();
 
-  const token = useAppSelector(getToken);
+  const token = useAppSelector(selectToken);
 
   const navigate = useNavigate();
 

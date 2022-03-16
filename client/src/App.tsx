@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { auth, getIsAuth, getLoading } from './features/auth/authSlice';
+import { auth, selectIsAuth, selectLoading } from './features/auth/authSlice';
 import { Login } from './features/auth/Login';
 import { Registration } from './features/auth/Registration';
 import { Calendar } from './features/tracker/Calendar';
@@ -11,8 +11,8 @@ import { LoadingPage } from './utils/LoadingPage/LoadingPage';
 import { Page404 } from './utils/Page404/Page404';
 
 export const App = () => {
-  const isAuth = useAppSelector(getIsAuth);
-  const isLoading = useAppSelector(getLoading);
+  const isAuth = useAppSelector(selectIsAuth);
+  const isLoading = useAppSelector(selectLoading);
 
   const dispatch = useAppDispatch();
 

@@ -1,15 +1,14 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import defaultAvatar from '../../assets/avatar.jpg';
-import { getCurrentUser, logout } from '../auth/authSlice';
+import { useAppSelector } from '../../app/hooks';
 import achievementImg from '../../assets/achievement.png';
+import defaultAvatar from '../../assets/avatar.jpg';
+import { selectCurrentUser } from '../auth/authSlice';
+import { Logout } from '../auth/Logout';
 
 const BASE_EXP = 1000;
 const FACTOR = 2;
 
 export const Sidebar = () => {
-  const dispatch = useAppDispatch();
-
-  const currentUser = useAppSelector(getCurrentUser);
+  const currentUser = useAppSelector(selectCurrentUser);
   if(!currentUser) return null;
 
   const avatar = currentUser.avatar || defaultAvatar;
@@ -20,10 +19,6 @@ export const Sidebar = () => {
   const expPercentStyle = {
     '--exp-percent': `${expPercent}%`,
   } as React.CSSProperties;
-
-  const logoutHandler = () => {
-    dispatch(logout());
-  };
 
   return (
     <div className='sidebar'>
@@ -50,9 +45,7 @@ export const Sidebar = () => {
         </div>
         <div className='achievements__list'></div>
       </div>
-      <button onClick={logoutHandler} className='sidebar__logout'>
-        Logout
-      </button>
+      <Logout />
     </div>
   );
 };

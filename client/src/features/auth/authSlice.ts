@@ -137,10 +137,10 @@ export const authSlice = createSlice({
 
 export const { logout } = authSlice.actions;
 
-export const getIsAuth = (state: RootState) => state.auth.isAuth;
-export const getCurrentUser = (state: RootState) => state.auth.currentUser;
-export const getToken = (state: RootState) => state.auth.token;
-export const getLoading = (state: RootState) => state.auth.loading;
-export const getError = (state: RootState) => state.auth.error;
+export const selectIsAuth = (state: RootState) => state.auth.isAuth;
+export const selectCurrentUser = (state: RootState) => state.auth.currentUser;
+export const selectToken = (state: RootState) => state.auth.token;
+export const selectLoading = (state: RootState) => state.auth.loading;
+export const selectError = (state: RootState) => state.auth.error;
 
 export const authReducer = authSlice.reducer;
