@@ -7,6 +7,7 @@ import { loginValidationSchema } from '../../utils/validators/authValidator';
 import { getErrorMessage } from '../../utils/helpers';
 import { login } from './authSlice';
 import { AuthCredentials } from './authApi';
+import './authorization.scss';
 
 export const Login: FC = () => {
   const dispatch = useAppDispatch();

@@ -36,18 +36,29 @@
     border-bottom: 3px solid rgba(255, 255, 255, 0);
     border-left: 3px solid rgba(255, 255, 255, 0);
     background-color: transparent !important;
-    animation-name: rotateAnimation;
+    animation-name: spin;
     animation-duration: 1s;
     animation-delay: 0.2s;
     animation-iteration-count: infinite;
   }
+}
 
-  @keyframes rotateAnimation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
+.error {
+  width: 100%;
+  padding: 5px 0;
+  color: red;
+}
+
+.log-error {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px;
+  color: red;
+  img {
+    max-width: 20px;
+    max-height: 20px;
+    margin: 0 3px 0 0;
   }
 }
+

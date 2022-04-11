@@ -1,8 +1,9 @@
 import { useAppSelector } from '../../app/hooks';
 import achievementImg from '../../assets/achievement.png';
 import defaultAvatar from '../../assets/avatar.jpg';
-import { selectCurrentUser } from '../auth/authSlice';
-import { Logout } from '../auth/Logout';
+import { selectCurrentUser } from '../../features/auth/authSlice';
+import { Logout } from '../../features/auth/Logout';
+import './sidebar.scss';
 
 const BASE_EXP = 1000;
 const FACTOR = 2;
@@ -45,7 +46,7 @@ export const Sidebar = () => {
         </div>
         <div className='achievements__list'></div>
       </div>
-      <Logout />
+      <Logout className='sidebar__logout' />
     </div>
   );
 };

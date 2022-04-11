@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import { Sidebar } from './Sidebar';
+import { Sidebar } from '../Layout/Sidebar';
+import './tracker.scss';
 
 export const Tracker = () => {
   return (

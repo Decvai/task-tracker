@@ -2,18 +2,19 @@ import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { statusList, Task } from '../../api/tasks';
+import { API_URL } from '../../app/config';
 import { useAppSelector } from '../../app/hooks';
 import ErrorIcon from '../../assets/error.png';
 import GoBack from '../../assets/go-back.png';
-import { API_URL } from '../../config';
+import { selectToken } from '../../features/auth/authSlice';
 import { getToday } from '../../utils/helpers';
-import { LoadingPage } from '../../utils/LoadingPage/LoadingPage';
+import { LoadingPage } from '../LoadingPage/LoadingPage';
 import {
   newTaskValidate,
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
-import { selectToken } from '../auth/authSlice';
-import { Status } from './Status';
+import { Status } from '../Status/Status';
+import './day.scss';
 
 type Param = 'dayId';
 

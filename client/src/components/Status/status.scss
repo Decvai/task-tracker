@@ -1,0 +1,55 @@
+.dayStatus {
+  position: relative;
+
+  min-width: 120px;
+
+  cursor: pointer;
+  text-align: center;
+}
+
+.dayStatus.show .dayStatusList {
+  display: block;
+
+  padding: 10px;
+
+  background-color: #fff;
+}
+
+.dayStatusList {
+  position: absolute;
+  z-index: 10;
+  top: 100%;
+  left: -5%;
+
+  display: none;
+
+  width: 110%;
+
+  cursor: default;
+
+  border-radius: 5px;
+  & > * {
+    margin: 0 0 5px 0;
+    padding: 10px;
+
+    cursor: pointer;
+  }
+
+  & > *:last-child {
+    margin: 0 0 0 0;
+  }
+
+  &::before {
+    position: absolute;
+    top: calc(var(--pseudoElHeight) * -1);
+    left: calc(50% - var(--pseudoElWidth));
+
+    content: '';
+
+    border-right: var(--pseudoElWidth) solid transparent;
+    border-bottom: var(--pseudoElWidth) solid rgb(243, 243, 243);
+    border-left: var(--pseudoElWidth) solid transparent;
+    --pseudoElWidth: 15px;
+    --pseudoElHeight: 15px;
+  }
+}

@@ -4,31 +4,29 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { auth, selectIsAuth, selectLoading } from './features/auth/authSlice';
 import { Login } from './features/auth/Login';
 import { Registration } from './features/auth/Registration';
-import { Calendar } from './features/tracker/Calendar';
-import { Day } from './features/tracker/Day';
-import { Tracker } from './features/tracker/Tracker';
-import { LoadingPage } from './utils/LoadingPage/LoadingPage';
-import { Page404 } from './utils/Page404/Page404';
+import { Calendar } from './components/Calendar/Calendar';
+import { Day } from './components/Day/Day';
+import { Tracker } from './components/Tracker/Tracker';
+import { LoadingPage } from './components/LoadingPage/LoadingPage';
+import { Page404 } from './components/Page404/Page404';
+import { AppLayout } from './components/Layout/AppLayout';
 
 export const App = () => {
-  const isAuth = useAppSelector(selectIsAuth);
-  const isLoading = useAppSelector(selectLoading);
-
   const dispatch = useAppDispatch();
-
   useEffect(() => {
     dispatch(auth());
   }, []);
 
+  const isAuth = useAppSelector(selectIsAuth);
+
+  const isLoading = useAppSelector(selectLoading);
   if (isLoading) {
-    return (
-      <LoadingPage />
-    )
+    return <LoadingPage />;
   }
 
   return (
     <Router>
-      <div className='app'>
+      <AppLayout>
         {isAuth ? (
           <Routes>
             <Route path='/' element={<Tracker />}>
@@ -46,7 +44,7 @@ export const App = () => {
             </Route>
           </Routes>
         )}
-      </div>
+      </AppLayout>
     </Router>
   );
 };

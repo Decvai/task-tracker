@@ -6,6 +6,7 @@ import {
   newTaskValidate,
   NewTaskValidateValues,
 } from '../../utils/validators/newTaskValidator';
+import './newTask.scss';
 
 interface NewTaskProps {
   active: boolean;
@@ -49,7 +50,7 @@ export const NewTask: FC<NewTaskProps> = ({ active, setActive }) => {
       status: statusList.blank,
     };
 
-    //TODO send to server
+    //TODO: send to server
 
     try {
       await postFetch(newTask);

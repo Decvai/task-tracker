@@ -3,8 +3,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
 import { useNavigate } from 'react-router-dom';
 import { MouseEvent, useRef, useState } from 'react';
-import { Clock } from '../../utils/Clock';
-import { NewTask } from './NewTask';
+import { Clock } from '../Clock/Clock';
+import { NewTask } from '../NewTask/NewTask';
+import './calendar.scss';
 
 export const Calendar = () => {
   const navigate = useNavigate();

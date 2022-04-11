@@ -153,7 +153,7 @@
   }
 
   &__index {
-    transition: all var(--transitionDelay);
+    transition: all var(--transition--delay);
   }
 
   &__remove-task {
@@ -171,13 +171,13 @@
     height: 90%;
 
     cursor: pointer;
-    transition: all var(--transitionDelay);
+    transition: all var(--transition--delay);
     text-align: center;
 
     background-color: rgb(72, 93, 162);
 
     span {
-      transition: opacity var(--transitionDelay);
+      transition: opacity var(--transition--delay);
 
       opacity: 0;
     }
@@ -201,7 +201,7 @@
     }
 
     &.fake {
-      transition: all calc(var(--transitionDelay) / 2);
+      transition: all calc(var(--transition--delay) / 2);
 
       background-color: rgb(120, 133, 177);
       &:hover {
@@ -237,7 +237,7 @@
       &-to {
         padding: 5px;
 
-        transition: all var(--transitionDelay);
+        transition: all var(--transition--delay);
 
         opacity: 0;
         color: #fff;
@@ -272,7 +272,7 @@
       padding: 0 15px;
 
       cursor: pointer;
-      transition: all var(--transitionDelay);
+      transition: all var(--transition--delay);
       transform: translateX(100vw);
 
       color: #fff;

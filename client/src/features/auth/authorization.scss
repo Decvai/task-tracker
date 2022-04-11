@@ -1,3 +1,10 @@
+.flex-wrap {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: center;
+}
+
 .authorization {
   padding: 30px;
   display: flex;

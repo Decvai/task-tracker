@@ -1,4 +1,4 @@
-import { API_URL } from '../../config';
+import { API_URL } from '../../app/config';
 import { User } from '../../models/User';
 
 export interface AuthFetchResponse {

@@ -6,6 +6,7 @@ import { registrationValidationSchema } from '../../utils/validators/authValidat
 import ErrorIcon from '../../assets/error.png';
 import { getErrorMessage } from '../../utils/helpers';
 import { login, registration } from './authSlice';
+import './authorization.scss';
 
 export interface RegistrationData {
   email: string;
