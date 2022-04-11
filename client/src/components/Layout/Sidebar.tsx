@@ -10,7 +10,7 @@ const FACTOR = 2;
 
 export const Sidebar = () => {
   const currentUser = useAppSelector(selectCurrentUser);
-  if(!currentUser) return null;
+  if (!currentUser) return null;
 
   const avatar = currentUser.avatar || defaultAvatar;
 

@@ -6,14 +6,14 @@ import { authReducer } from '../features/auth/authSlice';
 const rootPersistConfig = {
   key: 'root',
   storage: localforage,
-  whitelist: []
+  whitelist: [],
 };
 
 const authPersistConfig = {
   key: 'auth',
   storage: localforage,
-  whitelist: ['token']
-}
+  whitelist: ['token'],
+};
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authReducer),
