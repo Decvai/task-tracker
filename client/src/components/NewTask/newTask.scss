@@ -12,7 +12,7 @@
   width: 100vw;
   height: 100vh;
 
-  transition: all var(--transition--delay);
+  transition: all var(--transition-delay);
 
   opacity: 0;
   background-color: rgba(0, 0, 0, 0.4);
@@ -23,7 +23,7 @@
 
     padding: 20px;
 
-    transition: all var(--transition--delay);
+    transition: all var(--transition-delay);
     transform: scale(0.5);
 
     border-radius: 3px;
